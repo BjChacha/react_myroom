@@ -1,0 +1,19 @@
+{
+  "name": "myroom",
+  "version": "1.0.0",
+  "description": "- React\r - TailWind\r - Ant Design",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BjChacha/react_myroom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BjChacha/react_myroom/issues"
+  },
+  "homepage": "https://github.com/BjChacha/react_myroom#readme"
+}
