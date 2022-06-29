@@ -9,7 +9,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Hello World!</h1>
+            <h1 className="text-3xl">Hello World!</h1>
             <h1>Hello World!</h1>
             <Button onClick={() => setCount(count - 1)}>Primary</Button>
             <Button type='primary' onClick={() => {setCount(count + 1)}}>Click me {count} times</Button>
