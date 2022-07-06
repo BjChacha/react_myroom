@@ -8,7 +8,7 @@ import { DRAG_TYPE } from './const'
 
 const dragItems = [
     {
-        id: 1,
+        id: '1',
         type: DRAG_TYPE.TEXT,
         value: "This is a text 1",
         color: '#000000',
@@ -21,7 +21,7 @@ const dragItems = [
         align: 'center',
     },
     {
-        id: 2,
+        id: '2',
         type: DRAG_TYPE.TEXT,
         value: "This is a text 2",
         color: '#ffff00',
@@ -34,7 +34,7 @@ const dragItems = [
         align: 'right',
     },
     {
-        id: 3,
+        id: '3',
         type: DRAG_TYPE.TEXT,
         value: "This is a text 3",
         color: '#0000ff',
@@ -57,7 +57,7 @@ export default function DragApp() {
         <DndProvider backend={HTML5Backend}>
             <div className="App flex flex-row justify-between bg-cyan-300">
                 <DragList/>
-                <DragCanvas dragItems={items} setDragItemId={setItemId}/>
+                <DragCanvas key={items.length} dragItems={items} setDragItems={setItems} setDragItemId={setItemId}/>
                 <DragAttribute dragItems={items} dragItemId={itemId} setDragItems={setItems}/>
             </div>
         </DndProvider>

@@ -1,9 +1,34 @@
 import React from 'react';
 import { DRAG_TYPE } from '../const';
+import { useDrop } from 'react-dnd'
 
 export default function DragCanvas(props) {
 
-    const {dragItems, setDragItemId} = props;
+    const {dragItems, setDragItems, setDragItemId} = props;
+    const [_, drop] = useDrop(() => ({
+        accept: DRAG_TYPE.TEXT,
+        drop: (_, monitor) => {
+            const { x, y } = monitor.getClientOffset();
+            const currentX = x - 313;
+            const currentY = y - 123;
+            console.log(x, y)
+            setDragItems([
+              ...dragItems,
+              {
+                id: `${dragItems.length + 1}`,
+                type: DRAG_TYPE.TEXT,
+                value: "This is a text",
+                color: '#000000',
+                backgroundColor: '#ffffff',
+                size: 12,
+                width: 100,
+                height: 20,
+                left: currentX,
+                top: currentY,
+                align: 'center',
+              }
+            ])}
+    }));
 
     const itemToContent = (item) => {
         let content = null;
@@ -13,7 +38,7 @@ export default function DragCanvas(props) {
                     <div
                         key={item.id}
                         onClick={()=>{
-                            console.log(`Clicking on item ${item.id}`)
+                            // console.log(`Clicking on item ${item.id}`)
                             setDragItemId(item.id)
                         }}
                         style={{
@@ -23,6 +48,7 @@ export default function DragCanvas(props) {
                             height: `${item.height}px`,
                             left: `${item.left}px`,
                             top: `${item.top}px`,
+                            lineHeight: `${item.height}px`,
                             position: 'absolute',
                             backgroundColor: item.backgroundColor,
                             textAlign: item.align,
@@ -55,7 +81,7 @@ export default function DragCanvas(props) {
             <div className='drag-canvas-title text-center h-8 bg-slate-400 leading-8 text-lg'>
                 Drag Canvas
             </div>
-            <div className='drag-canvas-area relative'>{generateContent()}
+            <div className='drag-canvas-area relative h-full w-full' ref={drop}>{generateContent()}
             </div>
         </div>
     )

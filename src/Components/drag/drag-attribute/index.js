@@ -18,8 +18,9 @@ export default function DragAttribute(props) {
         }
     }
 
-    const getItemAttribute = () => {``
+    const getItemAttribute = () => {
         const dragItem = getDragItem(dragItemId);
+        const inputDomData = [];
 
         if (dragItem) {
             if (dragItem.type === DRAG_TYPE.TEXT) {
@@ -35,7 +36,8 @@ export default function DragAttribute(props) {
                                 name='text-value'
                                 defaultValue={dragItem.value}
                                 type="text"
-                                size="10"></input>
+                                size="10"
+                                ref={(element) => {inputDomData[0] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-color'>Text Color</label>
@@ -43,13 +45,15 @@ export default function DragAttribute(props) {
                                 id='text-color'
                                 name='text-color'
                                 defaultValue={dragItem.color}
-                                type="color"></input>
+                                type="color"
+                                ref={(element) => {inputDomData[1] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label>Background Color</label>
                             <input 
                                 defaultValue={dragItem.backgroundColor}
-                                type="color"></input>
+                                type="color"
+                                ref={(element) => {inputDomData[2] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-size'>Text Size</label>
@@ -59,8 +63,8 @@ export default function DragAttribute(props) {
                                 defaultValue={dragItem.size}
                                 type="number"
                                 min="2"
-                                max="20"
-                                ></input>
+                                max="670"
+                                ref={(element) => {inputDomData[3] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-width'>Width</label>
@@ -70,8 +74,8 @@ export default function DragAttribute(props) {
                                 defaultValue={dragItem.width}
                                 type="number"
                                 min="2"
-                                max="40"
-                                ></input>
+                                max="200"
+                                ref={(element) => {inputDomData[4] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-height'>Height</label>
@@ -81,29 +85,91 @@ export default function DragAttribute(props) {
                                 defaultValue={dragItem.height}
                                 type="number"
                                 min="2"
-                                max="40"
-                                ></input>
+                                max="790"
+                                ref={(element) => {inputDomData[5] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
-                            <label>Position X</label>
+                            <label htmlFor='text-left'>Position X</label>
                             <input 
+                                id='text-left'
+                                name='text-left'
                                 defaultValue={dragItem.left}
                                 type="number"
-                                min="2"
-                                max="40"
-                                ></input>
+                                min="0"
+                                // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
+                                max="670"
+                                ref={(element) => {inputDomData[6] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
-                            <label>Position Y</label>
+                            <label htmlFor='text-top'>Position Y</label>
                             <input 
+                                id='text-left'
+                                name='text-left'
+                                defaultValue={dragItem.top}
+                                type="number"
+                                min="0"
+                                // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
+                                max="790"
+                                ref={(element) => {inputDomData[7] = element;}}></input>
+                        </div>
+                        <div className='mx-2 my-2 w-56 flex justify-between'>
+                            {/* <label htmlFor='text-algin'>Align</label>
+                            <input 
+                                
                                 defaultValue={dragItem.top}
                                 type="number"
                                 min="2"
                                 max="40"
-                                ></input>
+                                ref={(element) => {inputDomData[7] = element;}}></input> */}
+                                Align
+                                <div>
+                                    <input 
+                                        type="radio" 
+                                        id="text-align-left"
+                                        name="contact" 
+                                        value="left" 
+                                        defaultChecked={dragItem.align == 'left'}
+                                        ref={(element) => {inputDomData[8] = element;}}></input>
+                                    <label for="text-align-left">Left</label>
+
+                                    <input 
+                                        type="radio" 
+                                        id="text-align-center"
+                                        name="contact" 
+                                        value="center" defaultChecked={dragItem.align == 'center'}
+                                        ref={(element) => {inputDomData[9] = element;}}></input>
+                                    <label for="text-align-center">Center</label>
+
+                                    <input 
+                                        type="radio" 
+                                        id="text-align-right"
+                                        name="contact" 
+                                        value="right" 
+                                        defaultChecked={dragItem.align == 'right'}
+                                        ref={(element) => { inputDomData[10] = element;}}></input>
+                                    <label for="text-align-right">Right</label>
+                                </div>
                         </div>
                     </div>
-                    <button className='m-2'>Confirm</button>
+                    <button 
+                        className='m-2 bg-slate-500'
+                        onClick={() => {
+                            setDragItemAttribute(dragItem.id, 'value', inputDomData[0].value);
+                            setDragItemAttribute(dragItem.id, 'color', inputDomData[1].value);
+                            setDragItemAttribute(dragItem.id, 'backgroundColor', inputDomData[2].value);
+                            setDragItemAttribute(dragItem.id, 'size', inputDomData[3].value);
+                            setDragItemAttribute(dragItem.id, 'width', inputDomData[4].value);
+                            setDragItemAttribute(dragItem.id, 'height', inputDomData[5].value);
+                            setDragItemAttribute(dragItem.id, 'left', inputDomData[6].value);
+                            setDragItemAttribute(dragItem.id, 'top', inputDomData[7].value);
+                            if (inputDomData[8].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[8].value);
+                            else if (inputDomData[9].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[9].value);
+                            else setDragItemAttribute(dragItem.id, 'align', inputDomData[10].value);
+                            // console.log(dragItem);
+                            setDragItems([...dragItems]);
+                        }}>
+                            Confirm
+                    </button>
                 </div>
             } else {
                 return <div>
