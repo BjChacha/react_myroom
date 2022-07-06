@@ -2,7 +2,7 @@ import React  from "react";
 
 export default function MyFooter() {
     return (
-        <div>
+        <div className="text-center">
             <p>
                 This is a footer.
             </p>

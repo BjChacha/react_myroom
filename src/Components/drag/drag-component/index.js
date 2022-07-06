@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function AppLeft() {
+export default function DragComponent() {
     return (
-        <div className='app-left'> 
+        <div className='drag-component bg-red-500'> 
             <p>
                 App Left 
             </p>
