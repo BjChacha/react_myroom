@@ -1,68 +1,69 @@
 import React from 'react';
-import { DRAG_TYPE } from '../const';
-import { useDrop } from 'react-dnd'
+import { DRAG_COMPONENT_TYPE as DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from '../const';
+import { useDrop, useDrag } from 'react-dnd'
+import DragTextItem from '../dragable/DragTextItem'
 
 export default function DragCanvas(props) {
 
     const {dragItems, setDragItems, setDragItemId} = props;
-    const [_, drop] = useDrop(() => ({
-        accept: DRAG_TYPE.TEXT,
-        drop: (_, monitor) => {
-            const { x, y } = monitor.getClientOffset();
-            const currentX = x - 313;
-            const currentY = y - 123;
-            console.log(x, y)
-            setDragItems([
-              ...dragItems,
-              {
-                id: `${dragItems.length + 1}`,
-                type: DRAG_TYPE.TEXT,
-                value: "This is a text",
-                color: '#000000',
-                backgroundColor: '#ffffff',
-                size: 12,
-                width: 100,
-                height: 20,
-                left: currentX,
-                top: currentY,
-                align: 'center',
-              }
-            ])}
+
+    const moveItem = (id, dx, dy) => {
+        for (let item of dragItems) {
+            if (item.id === id) {
+                item.left += dx;
+                item.top += dy;
+            }
+        }
+    };
+
+    const [, drop] = useDrop(() => ({
+        accept: [DRAG_COMPONENT_TYPE.TEXT, DRAG_ITEM_TYPE.TEXT],
+        drop: (item, monitor) => {
+            console.log(item);
+            const t = monitor.getItemType();
+
+            if (t === DRAG_COMPONENT_TYPE.TEXT) {
+                const { x, y } = monitor.getClientOffset();
+                const currentX = x - 313;
+                const currentY = y - 123;
+                setDragItems([
+                  ...dragItems,
+                  {
+                    id: `${dragItems.length + 1}`,
+                    type: DRAG_COMPONENT_TYPE.TEXT,
+                    value: "This is a text",
+                    color: '#000000',
+                    backgroundColor: '#ffffff',
+                    size: 12,
+                    width: 100,
+                    height: 20,
+                    left: currentX,
+                    top: currentY,
+                    align: 'center',
+                  }
+                ])
+            } else if (t === DRAG_ITEM_TYPE.TEXT) {
+                const {x, y} = monitor.getDifferenceFromInitialOffset();
+                console.log(x, y);
+                moveItem(item.id, x, y);
+            }
+
+        }
     }));
 
     const itemToContent = (item) => {
         let content = null;
         switch(item.type) {
-            case DRAG_TYPE.TEXT:
-                content = 
-                    <div
-                        key={item.id}
-                        onClick={()=>{
-                            // console.log(`Clicking on item ${item.id}`)
-                            setDragItemId(item.id)
-                        }}
-                        style={{
-                            color: item.color,
-                            fontSize: item.size,
-                            width: `${item.width}px`,
-                            height: `${item.height}px`,
-                            left: `${item.left}px`,
-                            top: `${item.top}px`,
-                            lineHeight: `${item.height}px`,
-                            position: 'absolute',
-                            backgroundColor: item.backgroundColor,
-                            textAlign: item.align,
-                        }}>
-                        {item.value}
-                    </div>;
+            case DRAG_COMPONENT_TYPE.TEXT:
+                content = <DragTextItem attributes={item} onclickCallback={setDragItemId}></DragTextItem>
                 break;
-            case DRAG_TYPE.IMAGE:
+            case DRAG_COMPONENT_TYPE.IMAGE:
                 break;
-            case DRAG_TYPE.VIDEO:
+            case DRAG_COMPONENT_TYPE.VIDEO:
                 break;
-            case DRAG_TYPE.AUDIO:
+            case DRAG_COMPONENT_TYPE.AUDIO:
                 break;
-            case DRAG_TYPE.CARD:
+            case DRAG_COMPONENT_TYPE.CARD:
                 break;
         }
         return content;

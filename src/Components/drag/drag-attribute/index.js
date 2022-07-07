@@ -1,5 +1,5 @@
 import React from 'react'
-import { DRAG_TYPE } from '../const';
+import { DRAG_COMPONENT_TYPE } from '../const';
 
 export default function DragAttribute(props) {
 
@@ -23,12 +23,16 @@ export default function DragAttribute(props) {
         const inputDomData = [];
 
         if (dragItem) {
-            if (dragItem.type === DRAG_TYPE.TEXT) {
+            if (dragItem.type === DRAG_COMPONENT_TYPE.TEXT) {
                 return <div key={dragItem.id} className="attribute">
                     <div className='mx-2 my-2 text-xl'>
                         Text Component
                     </div>
                     <div className='attribute-area'>
+                        <div className='mx-2 my-2 w-56 flex justify-between'>
+                            <p>Value</p>
+                            <p>{dragItem.id}</p>
+                        </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor="text-value">Value</label>
                             <input
@@ -113,14 +117,6 @@ export default function DragAttribute(props) {
                                 ref={(element) => {inputDomData[7] = element;}}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
-                            {/* <label htmlFor='text-algin'>Align</label>
-                            <input 
-                                
-                                defaultValue={dragItem.top}
-                                type="number"
-                                min="2"
-                                max="40"
-                                ref={(element) => {inputDomData[7] = element;}}></input> */}
                                 Align
                                 <div>
                                     <input 
@@ -130,16 +126,14 @@ export default function DragAttribute(props) {
                                         value="left" 
                                         defaultChecked={dragItem.align == 'left'}
                                         ref={(element) => {inputDomData[8] = element;}}></input>
-                                    <label for="text-align-left">Left</label>
-
+                                    <label htmlFor="text-align-left">Left</label>
                                     <input 
                                         type="radio" 
                                         id="text-align-center"
                                         name="contact" 
                                         value="center" defaultChecked={dragItem.align == 'center'}
                                         ref={(element) => {inputDomData[9] = element;}}></input>
-                                    <label for="text-align-center">Center</label>
-
+                                    <label htmlFor="text-align-center">Center</label>
                                     <input 
                                         type="radio" 
                                         id="text-align-right"
@@ -147,7 +141,7 @@ export default function DragAttribute(props) {
                                         value="right" 
                                         defaultChecked={dragItem.align == 'right'}
                                         ref={(element) => { inputDomData[10] = element;}}></input>
-                                    <label for="text-align-right">Right</label>
+                                    <label htmlFor="text-align-right">Right</label>
                                 </div>
                         </div>
                     </div>
@@ -165,7 +159,6 @@ export default function DragAttribute(props) {
                             if (inputDomData[8].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[8].value);
                             else if (inputDomData[9].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[9].value);
                             else setDragItemAttribute(dragItem.id, 'align', inputDomData[10].value);
-                            // console.log(dragItem);
                             setDragItems([...dragItems]);
                         }}>
                             Confirm

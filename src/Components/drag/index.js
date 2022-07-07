@@ -4,12 +4,12 @@ import DragCanvas from './drag-canvas'
 import DragAttribute from './drag-attribute'
 import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DRAG_TYPE } from './const'
+import { DRAG_COMPONENT_TYPE } from './const'
 
 const dragItems = [
     {
         id: '1',
-        type: DRAG_TYPE.TEXT,
+        type: DRAG_COMPONENT_TYPE.TEXT,
         value: "This is a text 1",
         color: '#000000',
         backgroundColor: '#ffffff',
@@ -22,7 +22,7 @@ const dragItems = [
     },
     {
         id: '2',
-        type: DRAG_TYPE.TEXT,
+        type: DRAG_COMPONENT_TYPE.TEXT,
         value: "This is a text 2",
         color: '#ffff00',
         backgroundColor: '#ff00ff',
@@ -35,7 +35,7 @@ const dragItems = [
     },
     {
         id: '3',
-        type: DRAG_TYPE.TEXT,
+        type: DRAG_COMPONENT_TYPE.TEXT,
         value: "This is a text 3",
         color: '#0000ff',
         backgroundColor: '#ffff00',
