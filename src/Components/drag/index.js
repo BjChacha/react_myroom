@@ -50,15 +50,16 @@ const dragItems = [
 
 export default function DragApp() {
 
-    const [items, setItems] = useState([...dragItems])
-    const [itemId, setItemId] = useState(null)
+    const [dragItem, setDragItem] = useState(null)
+    const [dragItems, setDragItems] = useState([...dragItems])
+    const [attributeId, setAttributeId] = useState(null)
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="App flex flex-row justify-between bg-cyan-300">
                 <DragList/>
-                <DragCanvas key={items.length} dragItems={items} setDragItems={setItems} setDragItemId={setItemId}/>
-                <DragAttribute dragItems={items} dragItemId={itemId} setDragItems={setItems}/>
+                <DragCanvas key={dragItems.length} dragItems={dragItems} setDragItems={setDragItems} setAttributeId={setAttributeId}/>
+                <DragAttribute dragItems={dragItems} dragItemId={attributeId} setDragItems={setDragItems}/>
             </div>
         </DndProvider>
     );

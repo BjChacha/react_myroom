@@ -5,7 +5,7 @@ import DragTextItem from '../dragable/DragTextItem'
 
 export default function DragCanvas(props) {
 
-    const {dragItems, setDragItems, setDragItemId} = props;
+    const {dragItems, setDragItems, setAttributeId} = props;
 
     const moveItem = (id, dx, dy) => {
         for (let item of dragItems) {
@@ -19,17 +19,20 @@ export default function DragCanvas(props) {
     const [, drop] = useDrop(() => ({
         accept: [DRAG_COMPONENT_TYPE.TEXT, DRAG_ITEM_TYPE.TEXT],
         drop: (item, monitor) => {
-            console.log(item);
             const t = monitor.getItemType();
+            let itemId = null;
 
             if (t === DRAG_COMPONENT_TYPE.TEXT) {
+                itemId = `${dragItems.length + 1}`;
+
                 const { x, y } = monitor.getClientOffset();
                 const currentX = x - 313;
                 const currentY = y - 123;
+
                 setDragItems([
                   ...dragItems,
                   {
-                    id: `${dragItems.length + 1}`,
+                    id: itemId,
                     type: DRAG_COMPONENT_TYPE.TEXT,
                     value: "This is a text",
                     color: '#000000',
@@ -43,11 +46,15 @@ export default function DragCanvas(props) {
                   }
                 ])
             } else if (t === DRAG_ITEM_TYPE.TEXT) {
-                const {x, y} = monitor.getDifferenceFromInitialOffset();
-                console.log(x, y);
-                moveItem(item.id, x, y);
-            }
+                itemId = item.id;
 
+                const {x, y} = monitor.getDifferenceFromInitialOffset();
+                // console.log(x, y);
+                moveItem(itemId, x, y);
+            }
+            // setDragItems([...dragItems,]);
+            // setDragItemId(null);
+            setAttributeId(itemId);
         }
     }));
 
@@ -55,7 +62,7 @@ export default function DragCanvas(props) {
         let content = null;
         switch(item.type) {
             case DRAG_COMPONENT_TYPE.TEXT:
-                content = <DragTextItem attributes={item} onclickCallback={setDragItemId}></DragTextItem>
+                content = <DragTextItem attributes={item} onclickCallback={setAttributeId}></DragTextItem>
                 break;
             case DRAG_COMPONENT_TYPE.IMAGE:
                 break;

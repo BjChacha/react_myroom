@@ -17,6 +17,7 @@ export default function DragTextItem(props) {
             isDragging: !!monitor.isDragging(),
         })
     }));
+
     return (
         <div
             key={attributes.id}
@@ -25,7 +26,7 @@ export default function DragTextItem(props) {
             }}
             style={{
                 color: attributes.color,
-                fontSize: attributes.size,
+                fontSize: `${attributes.size}px`,
                 width: `${attributes.width}px`,
                 height: `${attributes.height}px`,
                 left: `${attributes.left}px`,

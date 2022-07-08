@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DRAG_COMPONENT_TYPE } from '../const';
 
 export default function DragAttribute(props) {
@@ -14,12 +14,19 @@ export default function DragAttribute(props) {
 
     const setDragItemAttribute = (id, key, value) => {
         for (let item of dragItems) {
-            if (id === item.id) item[key] = value;
+            if (id === item.id) {
+                item[key] = value;
+            }
         }
+    }
+
+    const setAlign = (id, data) => {
+        if (data.checked) setDragItemAttribute(id, 'align', data.value);
     }
 
     const getItemAttribute = () => {
         const dragItem = getDragItem(dragItemId);
+        console.log(dragItem);
         const inputDomData = [];
 
         if (dragItem) {
@@ -41,7 +48,11 @@ export default function DragAttribute(props) {
                                 defaultValue={dragItem.value}
                                 type="text"
                                 size="10"
-                                ref={(element) => {inputDomData[0] = element;}}></input>
+                                ref={(element) => {inputDomData[0] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'value', inputDomData[0].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-color'>Text Color</label>
@@ -50,14 +61,24 @@ export default function DragAttribute(props) {
                                 name='text-color'
                                 defaultValue={dragItem.color}
                                 type="color"
-                                ref={(element) => {inputDomData[1] = element;}}></input>
+                                ref={(element) => {inputDomData[1] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'color', inputDomData[1].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
-                            <label>Background Color</label>
-                            <input 
+                            <label htmlFor='background-color'>Background Color</label>
+                            <input
+                                id='background-color'
+                                name='background-color' 
                                 defaultValue={dragItem.backgroundColor}
                                 type="color"
-                                ref={(element) => {inputDomData[2] = element;}}></input>
+                                ref={(element) => {inputDomData[2] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'backgroundColor', inputDomData[2].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-size'>Text Size</label>
@@ -68,7 +89,11 @@ export default function DragAttribute(props) {
                                 type="number"
                                 min="2"
                                 max="670"
-                                ref={(element) => {inputDomData[3] = element;}}></input>
+                                ref={(element) => {inputDomData[3] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'size', +inputDomData[3].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-width'>Width</label>
@@ -79,7 +104,11 @@ export default function DragAttribute(props) {
                                 type="number"
                                 min="2"
                                 max="200"
-                                ref={(element) => {inputDomData[4] = element;}}></input>
+                                ref={(element) => {inputDomData[4] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'width', +inputDomData[4].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-height'>Height</label>
@@ -90,7 +119,11 @@ export default function DragAttribute(props) {
                                 type="number"
                                 min="2"
                                 max="790"
-                                ref={(element) => {inputDomData[5] = element;}}></input>
+                                ref={(element) => {inputDomData[5] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'height', +inputDomData[5].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-left'>Position X</label>
@@ -102,7 +135,11 @@ export default function DragAttribute(props) {
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
                                 max="670"
-                                ref={(element) => {inputDomData[6] = element;}}></input>
+                                ref={(element) => {inputDomData[6] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'left', +inputDomData[6].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-top'>Position Y</label>
@@ -114,7 +151,11 @@ export default function DragAttribute(props) {
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
                                 max="790"
-                                ref={(element) => {inputDomData[7] = element;}}></input>
+                                ref={(element) => {inputDomData[7] = element;}}
+                                onChange={() => {
+                                    setDragItemAttribute(dragItem.id, 'top', +inputDomData[7].value);
+                                    setDragItems([...dragItems]);
+                                }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                                 Align
@@ -125,14 +166,23 @@ export default function DragAttribute(props) {
                                         name="contact" 
                                         value="left" 
                                         defaultChecked={dragItem.align == 'left'}
-                                        ref={(element) => {inputDomData[8] = element;}}></input>
+                                        ref={(element) => {inputDomData[8] = element;}}
+                                        onChange={() => {
+                                            setAlign(dragItem.id, inputDomData[8]);
+                                            setDragItems([...dragItems]);
+                                        }}
+                                        ></input>
                                     <label htmlFor="text-align-left">Left</label>
                                     <input 
                                         type="radio" 
                                         id="text-align-center"
                                         name="contact" 
                                         value="center" defaultChecked={dragItem.align == 'center'}
-                                        ref={(element) => {inputDomData[9] = element;}}></input>
+                                        ref={(element) => {inputDomData[9] = element;}}
+                                        onChange={() => {
+                                            setAlign(dragItem.id, inputDomData[9]);
+                                            setDragItems([...dragItems]);
+                                        }}></input>
                                     <label htmlFor="text-align-center">Center</label>
                                     <input 
                                         type="radio" 
@@ -140,29 +190,25 @@ export default function DragAttribute(props) {
                                         name="contact" 
                                         value="right" 
                                         defaultChecked={dragItem.align == 'right'}
-                                        ref={(element) => { inputDomData[10] = element;}}></input>
+                                        ref={(element) => { inputDomData[10] = element;}}
+                                        onChange={() => {
+                                            setAlign(dragItem.id, inputDomData[10]);
+                                            setDragItems([...dragItems]);
+                                        }}></input>
                                     <label htmlFor="text-align-right">Right</label>
                                 </div>
                         </div>
                     </div>
-                    <button 
+                    {/* <button 
                         className='m-2 bg-slate-500'
                         onClick={() => {
-                            setDragItemAttribute(dragItem.id, 'value', inputDomData[0].value);
-                            setDragItemAttribute(dragItem.id, 'color', inputDomData[1].value);
-                            setDragItemAttribute(dragItem.id, 'backgroundColor', inputDomData[2].value);
-                            setDragItemAttribute(dragItem.id, 'size', inputDomData[3].value);
-                            setDragItemAttribute(dragItem.id, 'width', inputDomData[4].value);
-                            setDragItemAttribute(dragItem.id, 'height', inputDomData[5].value);
-                            setDragItemAttribute(dragItem.id, 'left', inputDomData[6].value);
-                            setDragItemAttribute(dragItem.id, 'top', inputDomData[7].value);
                             if (inputDomData[8].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[8].value);
                             else if (inputDomData[9].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[9].value);
                             else setDragItemAttribute(dragItem.id, 'align', inputDomData[10].value);
                             setDragItems([...dragItems]);
                         }}>
                             Confirm
-                    </button>
+                    </button> */}
                 </div>
             } else {
                 return <div>
