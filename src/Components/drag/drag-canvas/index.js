@@ -22,7 +22,6 @@ export default function DragCanvas(props) {
             setAttributeId(null);
             const t = monitor.getItemType();
             let itemId = null;
-            
             if (t === DRAG_COMPONENT_TYPE.TEXT) {
                 itemId = `${dragItems.length + 1}`;
 
