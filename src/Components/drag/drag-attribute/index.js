@@ -3,8 +3,8 @@ import { DRAG_COMPONENT_TYPE } from '../const';
 
 export default function DragAttribute(props) {
 
-    const {dragItems, dragItemId, setDragItems} = props;
-
+    const {dragItems, dragItemId, setDragItems, testValue} = props;
+    
     const getDragItem = (id) => {
         for (let item of dragItems) {
             if (id === item.id) return item;
@@ -26,7 +26,8 @@ export default function DragAttribute(props) {
 
     const getItemAttribute = () => {
         const dragItem = getDragItem(dragItemId);
-        console.log(dragItem);
+        // console.log("attribute: ", dragItemId);
+        // console.log("test: ", testValue);
         const inputDomData = [];
 
         if (dragItem) {
@@ -45,7 +46,7 @@ export default function DragAttribute(props) {
                             <input
                                 id='text-value'
                                 name='text-value'
-                                defaultValue={dragItem.value}
+                                value={dragItem.value}
                                 type="text"
                                 size="10"
                                 ref={(element) => {inputDomData[0] = element;}}
@@ -59,7 +60,7 @@ export default function DragAttribute(props) {
                             <input
                                 id='text-color'
                                 name='text-color'
-                                defaultValue={dragItem.color}
+                                value={dragItem.color}
                                 type="color"
                                 ref={(element) => {inputDomData[1] = element;}}
                                 onChange={() => {
@@ -72,7 +73,7 @@ export default function DragAttribute(props) {
                             <input
                                 id='background-color'
                                 name='background-color' 
-                                defaultValue={dragItem.backgroundColor}
+                                value={dragItem.backgroundColor}
                                 type="color"
                                 ref={(element) => {inputDomData[2] = element;}}
                                 onChange={() => {
@@ -85,7 +86,7 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-size'
                                 name='text-size'
-                                defaultValue={dragItem.size}
+                                value={dragItem.size}
                                 type="number"
                                 min="2"
                                 max="670"
@@ -100,7 +101,7 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-width'
                                 name='text-width'
-                                defaultValue={dragItem.width}
+                                value={dragItem.width}
                                 type="number"
                                 min="2"
                                 max="200"
@@ -115,7 +116,7 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-height'
                                 name='text-height'
-                                defaultValue={dragItem.height}
+                                value={dragItem.height}
                                 type="number"
                                 min="2"
                                 max="790"
@@ -130,7 +131,7 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-left'
                                 name='text-left'
-                                defaultValue={dragItem.left}
+                                value={dragItem.left}
                                 type="number"
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
@@ -146,7 +147,7 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-left'
                                 name='text-left'
-                                defaultValue={dragItem.top}
+                                value={dragItem.top}
                                 type="number"
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
@@ -165,7 +166,7 @@ export default function DragAttribute(props) {
                                         id="text-align-left"
                                         name="contact" 
                                         value="left" 
-                                        defaultChecked={dragItem.align == 'left'}
+                                        defaultChecked={dragItem.align === 'left'}
                                         ref={(element) => {inputDomData[8] = element;}}
                                         onChange={() => {
                                             setAlign(dragItem.id, inputDomData[8]);
@@ -177,7 +178,7 @@ export default function DragAttribute(props) {
                                         type="radio" 
                                         id="text-align-center"
                                         name="contact" 
-                                        value="center" defaultChecked={dragItem.align == 'center'}
+                                        value="center" defaultChecked={dragItem.align === 'center'}
                                         ref={(element) => {inputDomData[9] = element;}}
                                         onChange={() => {
                                             setAlign(dragItem.id, inputDomData[9]);
@@ -189,7 +190,7 @@ export default function DragAttribute(props) {
                                         id="text-align-right"
                                         name="contact" 
                                         value="right" 
-                                        defaultChecked={dragItem.align == 'right'}
+                                        defaultChecked={dragItem.align === 'right'}
                                         ref={(element) => { inputDomData[10] = element;}}
                                         onChange={() => {
                                             setAlign(dragItem.id, inputDomData[10]);
@@ -199,16 +200,6 @@ export default function DragAttribute(props) {
                                 </div>
                         </div>
                     </div>
-                    {/* <button 
-                        className='m-2 bg-slate-500'
-                        onClick={() => {
-                            if (inputDomData[8].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[8].value);
-                            else if (inputDomData[9].checked) setDragItemAttribute(dragItem.id, 'align', inputDomData[9].value);
-                            else setDragItemAttribute(dragItem.id, 'align', inputDomData[10].value);
-                            setDragItems([...dragItems]);
-                        }}>
-                            Confirm
-                    </button> */}
                 </div>
             } else {
                 return <div>

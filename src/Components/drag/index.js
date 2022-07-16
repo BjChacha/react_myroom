@@ -6,7 +6,7 @@ import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DRAG_COMPONENT_TYPE } from './const'
 
-const dragItems = [
+const MOCK_ITEMS = [
     {
         id: '1',
         type: DRAG_COMPONENT_TYPE.TEXT,
@@ -51,15 +51,17 @@ const dragItems = [
 export default function DragApp() {
 
     const [dragItem, setDragItem] = useState(null)
-    const [dragItems, setDragItems] = useState([...dragItems])
+    const [dragItems, setDragItems] = useState([...MOCK_ITEMS])
     const [attributeId, setAttributeId] = useState(null)
+
+    const [testValue, setTestValue] = useState(0)
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="App flex flex-row justify-between bg-cyan-300">
                 <DragList/>
-                <DragCanvas key={dragItems.length} dragItems={dragItems} setDragItems={setDragItems} setAttributeId={setAttributeId}/>
-                <DragAttribute dragItems={dragItems} dragItemId={attributeId} setDragItems={setDragItems}/>
+                <DragCanvas key={dragItems.length} dragItems={dragItems} setDragItems={setDragItems} setAttributeId={setAttributeId} setTestValue={setTestValue}/>
+                <DragAttribute dragItems={dragItems} dragItemId={attributeId} setDragItems={setDragItems} testValue={testValue}/>
             </div>
         </DndProvider>
     );
