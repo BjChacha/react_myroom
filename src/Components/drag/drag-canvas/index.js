@@ -5,7 +5,7 @@ import DragTextItem from '../dragable/DragTextItem'
 
 export default function DragCanvas(props) {
 
-    const {dragItems, setDragItems, setAttributeId, setTestValue} = props;
+    const {dragItems, setDragItems, setAttributeId, setSyncValue} = props;
 
     const moveItem = (id, dx, dy) => {
         for (let item of dragItems) {
@@ -19,7 +19,6 @@ export default function DragCanvas(props) {
     const [, drop] = useDrop(() => ({
         accept: [DRAG_COMPONENT_TYPE.TEXT, DRAG_ITEM_TYPE.TEXT],
         drop: (item, monitor) => {
-            setAttributeId(null);
             const t = monitor.getItemType();
             let itemId = null;
             if (t === DRAG_COMPONENT_TYPE.TEXT) {
@@ -53,7 +52,7 @@ export default function DragCanvas(props) {
                 moveItem(itemId, x, y);
             }
             setAttributeId(itemId);
-            setTestValue(Math.random());
+            setSyncValue(Math.random());
         }
     }));
 

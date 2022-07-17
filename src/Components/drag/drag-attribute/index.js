@@ -3,7 +3,7 @@ import { DRAG_COMPONENT_TYPE } from '../const';
 
 export default function DragAttribute(props) {
 
-    const {dragItems, dragItemId, setDragItems, testValue} = props;
+    const {dragItems, dragItemId, setDragItems} = props;
     
     const getDragItem = (id) => {
         for (let item of dragItems) {
@@ -26,8 +26,6 @@ export default function DragAttribute(props) {
 
     const getItemAttribute = () => {
         const dragItem = getDragItem(dragItemId);
-        // console.log("attribute: ", dragItemId);
-        // console.log("test: ", testValue);
         const inputDomData = [];
 
         if (dragItem) {
