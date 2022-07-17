@@ -6,16 +6,19 @@ export default function DragTextItem(props) {
 
     const {attributes, onclickCallback} = props;
 
-    const [, drag] = useDrag(() => ({
+    const [collected, drag, dragPreview] = useDrag(() => ({
         type: DRAG_ITEM_TYPE.TEXT,
         item: {
             id: attributes.id,
             left: attributes.left, 
             top: attributes.top,
         },
+        options: {
+            dropEffect: "move",
+        },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
-        })
+        }),
     }));
 
     return (
@@ -36,7 +39,7 @@ export default function DragTextItem(props) {
                 backgroundColor: attributes.backgroundColor,
                 textAlign: attributes.align,
                 // TODO: 0 when dragging
-                opacity: 1,
+                opacity: collected.isDragging ? 0 : 1,
             }}
             ref={drag}>
             {attributes.value}
