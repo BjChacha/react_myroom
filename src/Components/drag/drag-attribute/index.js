@@ -41,17 +41,18 @@ export default function DragAttribute(props) {
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor="text-value">Value</label>
-                            <input
+                            <textarea
                                 id='text-value'
                                 name='text-value'
                                 value={dragItem.value}
                                 type="text"
-                                size="10"
+                                rows={2}
+                                cols={12}
                                 ref={(element) => {inputDomData[0] = element;}}
                                 onChange={() => {
                                     setDragItemAttribute(dragItem.id, 'value', inputDomData[0].value);
                                     setDragItems([...dragItems]);
-                                }}></input>
+                                }}></textarea>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor='text-color'>Text Color</label>
