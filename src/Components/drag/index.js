@@ -54,13 +54,11 @@ export default function DragApp() {
     const [dragItems, setDragItems] = useState([...MOCK_ITEMS])
     const [attributeId, setAttributeId] = useState(null)
 
-    const [, setSyncValue] = useState(0)
-
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="App flex flex-row justify-between bg-cyan-300">
                 <DragList/>
-                <DragCanvas key={dragItems.length} dragItems={dragItems} setDragItems={setDragItems} setAttributeId={setAttributeId} setSyncValue={setSyncValue}/>
+                <DragCanvas key={dragItems.length} dragItems={dragItems} setDragItems={setDragItems} setAttributeId={setAttributeId}/>
                 <DragAttribute dragItems={dragItems} dragItemId={attributeId} setDragItems={setDragItems}/>
             </div>
         </DndProvider>

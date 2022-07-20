@@ -5,7 +5,7 @@ import DragTextItem from '../dragable/DragTextItem'
 
 export default function DragCanvas(props) {
 
-    const {dragItems, setDragItems, setAttributeId, setSyncValue} = props;
+    const {dragItems, setDragItems, setAttributeId} = props;
 
     const moveItem = (id, dx, dy) => {
         for (let item of dragItems) {
@@ -14,6 +14,7 @@ export default function DragCanvas(props) {
                 item.top += dy;
             }
         }
+        setDragItems([...dragItems]);
     };
 
     const [, drop] = useDrop(() => ({
@@ -52,7 +53,6 @@ export default function DragCanvas(props) {
                 moveItem(itemId, x, y);
             }
             setAttributeId(itemId);
-            setSyncValue(Math.random());
         }
     }));
 
