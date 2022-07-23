@@ -22,3 +22,4 @@
 - [ ] 实现组件组合、拆分功能
 - [ ] 实现基本路由功能
 - [ ] 去除tailwind和ant design
+- [ ] 重写attribute的form（状态提升）
