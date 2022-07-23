@@ -158,45 +158,45 @@ export default function DragAttribute(props) {
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
-                                Align
-                                <div>
-                                    <input 
-                                        type="radio" 
-                                        id="text-align-left"
-                                        name="contact" 
-                                        value="left" 
-                                        defaultChecked={dragItem.align === 'left'}
-                                        ref={(element) => {inputDomData[8] = element;}}
-                                        onChange={() => {
-                                            setAlign(dragItem.id, inputDomData[8]);
-                                            setDragItems([...dragItems]);
-                                        }}
-                                        ></input>
-                                    <label htmlFor="text-align-left">Left</label>
-                                    <input 
-                                        type="radio" 
-                                        id="text-align-center"
-                                        name="contact" 
-                                        value="center" defaultChecked={dragItem.align === 'center'}
-                                        ref={(element) => {inputDomData[9] = element;}}
-                                        onChange={() => {
-                                            setAlign(dragItem.id, inputDomData[9]);
-                                            setDragItems([...dragItems]);
-                                        }}></input>
-                                    <label htmlFor="text-align-center">Center</label>
-                                    <input 
-                                        type="radio" 
-                                        id="text-align-right"
-                                        name="contact" 
-                                        value="right" 
-                                        defaultChecked={dragItem.align === 'right'}
-                                        ref={(element) => { inputDomData[10] = element;}}
-                                        onChange={() => {
-                                            setAlign(dragItem.id, inputDomData[10]);
-                                            setDragItems([...dragItems]);
-                                        }}></input>
-                                    <label htmlFor="text-align-right">Right</label>
-                                </div>
+                            Align
+                            <div>
+                                <input 
+                                    type="radio" 
+                                    id="text-align-left"
+                                    name="contact" 
+                                    value="left" 
+                                    defaultChecked={dragItem.align === 'left'}
+                                    ref={(element) => {inputDomData[8] = element;}}
+                                    onChange={() => {
+                                        setAlign(dragItem.id, inputDomData[8]);
+                                        setDragItems([...dragItems]);
+                                    }}
+                                    ></input>
+                                <label htmlFor="text-align-left">Left</label>
+                                <input 
+                                    type="radio" 
+                                    id="text-align-center"
+                                    name="contact" 
+                                    value="center" defaultChecked={dragItem.align === 'center'}
+                                    ref={(element) => {inputDomData[9] = element;}}
+                                    onChange={() => {
+                                        setAlign(dragItem.id, inputDomData[9]);
+                                        setDragItems([...dragItems]);
+                                    }}></input>
+                                <label htmlFor="text-align-center">Center</label>
+                                <input 
+                                    type="radio" 
+                                    id="text-align-right"
+                                    name="contact" 
+                                    value="right" 
+                                    defaultChecked={dragItem.align === 'right'}
+                                    ref={(element) => { inputDomData[10] = element;}}
+                                    onChange={() => {
+                                        setAlign(dragItem.id, inputDomData[10]);
+                                        setDragItems([...dragItems]);
+                                    }}></input>
+                                <label htmlFor="text-align-right">Right</label>
+                            </div>
                         </div>
                     </div>
                 </div>
