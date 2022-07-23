@@ -18,6 +18,7 @@ export default function DragAttribute(props) {
                 item[key] = value;
             }
         }
+        setDragItems([...dragItems]);
     }
 
     const setAlign = (id, data) => {
@@ -26,32 +27,33 @@ export default function DragAttribute(props) {
 
     const getItemAttribute = () => {
         const dragItem = getDragItem(dragItemId);
-        const inputDomData = [];
-
+        const inputDomData = {};
+        
         if (dragItem) {
-            if (dragItem.type === DRAG_COMPONENT_TYPE.TEXT) {
-                return <div key={dragItem.id} className="attribute">
+            let {type, value, color, backgroundColor, size, width, height, left, top, align} = dragItem;
+            
+            if (type === DRAG_COMPONENT_TYPE.TEXT) {
+                return <div key={dragItemId} className="attribute">
                     <div className='mx-2 my-2 text-xl'>
                         Text Component
                     </div>
                     <div className='attribute-area'>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <p>Value</p>
-                            <p>{dragItem.id}</p>
+                            <p>{dragItemId}</p>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
                             <label htmlFor="text-value">Value</label>
                             <textarea
                                 id='text-value'
                                 name='text-value'
-                                value={dragItem.value}
+                                value={value}
                                 type="text"
                                 rows={2}
                                 cols={12}
-                                ref={(element) => {inputDomData[0] = element;}}
+                                ref={(element) => {inputDomData.value = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'value', inputDomData[0].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'value', inputDomData.value.value);
                                 }}></textarea>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -59,12 +61,11 @@ export default function DragAttribute(props) {
                             <input
                                 id='text-color'
                                 name='text-color'
-                                value={dragItem.color}
+                                value={color}
                                 type="color"
-                                ref={(element) => {inputDomData[1] = element;}}
+                                ref={(element) => {inputDomData.color = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'color', inputDomData[1].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'color', inputDomData.color.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -72,12 +73,11 @@ export default function DragAttribute(props) {
                             <input
                                 id='background-color'
                                 name='background-color' 
-                                value={dragItem.backgroundColor}
+                                value={backgroundColor}
                                 type="color"
-                                ref={(element) => {inputDomData[2] = element;}}
+                                ref={(element) => {inputDomData.backgroundColor = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'backgroundColor', inputDomData[2].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'backgroundColor', inputDomData.backgroundColor.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -85,14 +85,13 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-size'
                                 name='text-size'
-                                value={dragItem.size}
+                                value={size}
                                 type="number"
                                 min="2"
                                 max="670"
-                                ref={(element) => {inputDomData[3] = element;}}
+                                ref={(element) => {inputDomData.size = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'size', +inputDomData[3].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'size', +inputDomData.size.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -100,14 +99,13 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-width'
                                 name='text-width'
-                                value={dragItem.width}
+                                value={width}
                                 type="number"
                                 min="2"
                                 max="200"
-                                ref={(element) => {inputDomData[4] = element;}}
+                                ref={(element) => {inputDomData.width = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'width', +inputDomData[4].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'width', +inputDomData.width.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -115,14 +113,13 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-height'
                                 name='text-height'
-                                value={dragItem.height}
+                                value={height}
                                 type="number"
                                 min="2"
                                 max="790"
-                                ref={(element) => {inputDomData[5] = element;}}
+                                ref={(element) => {inputDomData.height = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'height', +inputDomData[5].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'height', +inputDomData.height.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -130,15 +127,14 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-left'
                                 name='text-left'
-                                value={dragItem.left}
+                                value={left}
                                 type="number"
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
                                 max="670"
-                                ref={(element) => {inputDomData[6] = element;}}
+                                ref={(element) => {inputDomData.left = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'left', +inputDomData[6].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'left', +inputDomData.left.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -146,15 +142,14 @@ export default function DragAttribute(props) {
                             <input 
                                 id='text-left'
                                 name='text-left'
-                                value={dragItem.top}
+                                value={top}
                                 type="number"
                                 min="0"
                                 // todo: 自适应边界：根据实际canvas大小和组件大小，计算最大值
                                 max="790"
-                                ref={(element) => {inputDomData[7] = element;}}
+                                ref={(element) => {inputDomData.top = element;}}
                                 onChange={() => {
-                                    setDragItemAttribute(dragItem.id, 'top', +inputDomData[7].value);
-                                    setDragItems([...dragItems]);
+                                    setDragItemAttribute(dragItemId, 'top', +inputDomData.top.value);
                                 }}></input>
                         </div>
                         <div className='mx-2 my-2 w-56 flex justify-between'>
@@ -165,11 +160,10 @@ export default function DragAttribute(props) {
                                     id="text-align-left"
                                     name="contact" 
                                     value="left" 
-                                    defaultChecked={dragItem.align === 'left'}
-                                    ref={(element) => {inputDomData[8] = element;}}
+                                    defaultChecked={align === 'left'}
+                                    ref={(element) => {inputDomData.alignLeft = element;}}
                                     onChange={() => {
-                                        setAlign(dragItem.id, inputDomData[8]);
-                                        setDragItems([...dragItems]);
+                                        setAlign(dragItemId, inputDomData.alignLeft);
                                     }}
                                     ></input>
                                 <label htmlFor="text-align-left">Left</label>
@@ -177,11 +171,10 @@ export default function DragAttribute(props) {
                                     type="radio" 
                                     id="text-align-center"
                                     name="contact" 
-                                    value="center" defaultChecked={dragItem.align === 'center'}
-                                    ref={(element) => {inputDomData[9] = element;}}
+                                    value="center" defaultChecked={align === 'center'}
+                                    ref={(element) => {inputDomData.alignCenter = element;}}
                                     onChange={() => {
-                                        setAlign(dragItem.id, inputDomData[9]);
-                                        setDragItems([...dragItems]);
+                                        setAlign(dragItemId, inputDomData.alignCenter);
                                     }}></input>
                                 <label htmlFor="text-align-center">Center</label>
                                 <input 
@@ -189,11 +182,10 @@ export default function DragAttribute(props) {
                                     id="text-align-right"
                                     name="contact" 
                                     value="right" 
-                                    defaultChecked={dragItem.align === 'right'}
-                                    ref={(element) => { inputDomData[10] = element;}}
+                                    defaultChecked={align === 'right'}
+                                    ref={(element) => {inputDomData.alignRight = element;}}
                                     onChange={() => {
-                                        setAlign(dragItem.id, inputDomData[10]);
-                                        setDragItems([...dragItems]);
+                                        setAlign(dragItemId, inputDomData.alignRight);
                                     }}></input>
                                 <label htmlFor="text-align-right">Right</label>
                             </div>
