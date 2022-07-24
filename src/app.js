@@ -5,7 +5,7 @@ import MyNav from './Components/nav';
 import { Outlet } from "react-router-dom";
 import {Layout} from 'antd';
 
-const {Header, Footer, Sider, Content} = Layout;
+const {Header, Footer, Content} = Layout;
 
 export default function App() {
     return (

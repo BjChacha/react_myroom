@@ -1,0 +1,17 @@
+.MyNav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:flex-start;
+    align-items: center;
+    padding: auto;
+
+}
+
+.nav-item {
+    margin: 0 2em;
+}
+
+.nav-login {
+    margin-left: auto;
+}
+
