@@ -1,6 +1,7 @@
 const path = require("path");
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -40,4 +41,8 @@ module.exports = {
     }),
     new ReactRefreshPlugin(),
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 };
