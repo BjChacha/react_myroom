@@ -24,13 +24,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
-    filename: "bundle.js"
+    filename: "[name].[contenthash].js"
   },
   devServer: {
     static: {
       directory: path.join(__dirname, "./public"),
     },
     port: 3000,
+    hot: true,
     devMiddleware: {
       publicPath: "http://localhost:3000/dist/",
     },
@@ -43,6 +44,8 @@ module.exports = {
   ],
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()],
+    minimizer: [new TerserPlugin({
+      extractComments: false,
+    })],
   },
 };
