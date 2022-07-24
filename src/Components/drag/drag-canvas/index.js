@@ -60,7 +60,7 @@ export default function DragCanvas(props) {
         let content = null;
         switch(item.type) {
             case DRAG_COMPONENT_TYPE.TEXT:
-                content = <DragTextItem attributes={item} onclickCallback={setAttributeId}></DragTextItem>
+                content = <DragTextItem key={item.id} attributes={item} onclickCallback={setAttributeId}></DragTextItem>
                 break;
             case DRAG_COMPONENT_TYPE.IMAGE:
                 break;
