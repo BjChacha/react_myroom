@@ -2,6 +2,7 @@ const path = require("path");
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 module.exports = {
   entry: "./src/index.js",
@@ -24,11 +25,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",
-    filename: "[name].[contenthash].js"
+    filename: "bundle.js"
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "./public"),
+      directory: path.join(__dirname, "./dist"),
     },
     port: 3000,
     hot: true,
@@ -37,10 +38,8 @@ module.exports = {
     },
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: "MyRoom App",
-    }),
     new ReactRefreshPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimize: true,
