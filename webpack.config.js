@@ -1,5 +1,6 @@
 const path = require("path");
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: "./src/index.js",
@@ -34,6 +35,9 @@ module.exports = {
     },
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: "MyRoom App",
+    }),
     new ReactRefreshPlugin(),
   ],
 };
