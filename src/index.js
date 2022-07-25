@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from './app';
 import DragApp from './Components/drag'
-import Login from './Components/login'
+import AuthApp from './Components/auth'
 import 'antd/dist/antd.css';
 import "./index.css";
 
@@ -15,7 +15,7 @@ root.render(
     <Routes>
         <Route path='/' element={<App/>}>
             <Route path='/drag' element={<DragApp/>}></Route>
-            <Route path='/login' element={<Login/>}></Route>
+            <Route path='/auth' element={<AuthApp/>}></Route>
         </Route>
     </Routes>
   </BrowserRouter>
