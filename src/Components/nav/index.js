@@ -9,7 +9,7 @@ export default function MyNav() {
         <div className="MyNav-container bg-slate-500">
             <nav className='MyNav'>
                 <Link className='nav-item nav-index' to="/">Index</Link>
-                <Link className='nav-item nav-canvas' to="/canvas">Canvas</Link>
+                <Link className='nav-item nav-canvas' to="/drag">Canvas</Link>
                 <Link className='nav-item nav-login' to="/login">Login</Link>
             </nav>
         </div>
