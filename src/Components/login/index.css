@@ -1,0 +1,33 @@
+.login-form-container > form{
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    width: 14rem;
+    border: 1px solid #CCC;
+    border-radius: 1rem;
+}
+
+.login-form-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.8rem auto
+}
+
+.login-form-item input{
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+}
+
+.login-form-button {
+    justify-content: space-around;
+}
+
+.login-form-button button {
+    border: 1px solid #CCC;
+    border-radius: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    transition: background-color 0.2s ease-in;
+}
+
+.login-form-button button:hover {
+    background-color: aqua;
+}
