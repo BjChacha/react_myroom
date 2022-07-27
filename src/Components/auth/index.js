@@ -5,6 +5,7 @@ import Dashboard from './dashboard'
 import './index.css'
 
 export default function AuthApp() {
+
     const [token, setToken] = useOutletContext();
 
     return token ? <Dashboard/> : <Login setToken={setToken}/>
