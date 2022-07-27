@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/client/index.js",
   mode: "development",
   module: {
     rules: [
