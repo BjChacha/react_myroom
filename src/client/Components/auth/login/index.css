@@ -6,28 +6,30 @@
     border-radius: 1rem;
 }
 
-.login-form-item {
+.login-form-item, .login-form-submit {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin: 0.8rem auto
 }
 
+
 .login-form-item input{
     border-radius: 0.5rem;
+    margin-top: 0.5rem;
     padding: 0.2rem;
 }
 
-.login-form-button {
-    justify-content: space-around;
-}
-
-.login-form-button button {
+.login-form-submit button {
     border: 1px solid #CCC;
     border-radius: 0.5rem;
     padding: 0.2rem 0.5rem;
-    transition: background-color 0.2s ease-in;
+    margin: 0.2rem 0;
+    width: 100px;
+    align-self: center;
+    transition: all 0.2s ease-in;
 }
 
-.login-form-button button:hover {
-    background-color: aqua;
+.login-form-submit button:hover {
+    background-color: cyan;
+    border: 1px solid cyan;
 }
