@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "serve": "node src/server/server.mjs",
+    "serve": "nodemon src/server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -38,7 +38,11 @@
   "dependencies": {
     "antd": "^4.21.4",
     "babel-loader": "^8.2.5",
+    "bcrypt": "^5.0.1",
     "css-loader": "^6.7.1",
+    "dotenv": "^16.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.19",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
