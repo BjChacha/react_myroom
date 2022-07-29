@@ -16,12 +16,10 @@ app.use(
 app.post('/auth', (req, res) => {
   console.log('server received: ', req.body);
   let type = req.body.type;
-  const r = processAuthRequest[type](req, res);
-  // console.log(r);
 
-  // res.send({
-  //   token: Date.parse(new Date()),
-  // });
+  let r;
+  if (type in processAuthRequest) r = processAuthRequest[type](req, res);
+
 });
 
-app.listen(port, () => console.log(`API is running on http://localhost:${port}/login`));
+app.listen(port, () => console.log(`API is running on http://localhost:${port}/auth`));

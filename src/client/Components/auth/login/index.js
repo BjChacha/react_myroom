@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
-import Proptypes from 'prop-types'
+import React, {useState} from 'react';
+import Proptypes from 'prop-types';
+import {message} from 'antd';
+import {Form, Input, Button} from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
-import './index.css'
+import './index.css';
 
 const USERNAME_REGEX = '^[a-zA-Z0-9\-]+$';
 const PASSWORD_REGEX = '^[a-zA-Z0-9!@#\$%\^&\*]{8,16}$';
 
-async function loginUser(credentials) {
+async function submitUser(credentials) {
     return fetch('http://localhost:8080/auth', {
         method: 'POST',
         headers: {
@@ -18,22 +21,33 @@ async function loginUser(credentials) {
 
 export default function Login(props) {
 
-    const {setToken} = props;
+    const {error, setError, setToken} = props;
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     
     const [pwVisible, setPwVisible] = useState(false);
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e, type) => {
         e.preventDefault();
+        // const type = e.nativeEvent.submitter.name;
+
         console.log('submit: ',username, password);
-        const {token} = await loginUser({
+        const resJson = await submitUser({
             username,
             password,
-            type: e.nativeEvent.submitter.name,
+            type,
         });
-        setToken(token);
+
+        if ('error' in resJson) {
+            // console.log(`${type} failed: ${resJson.error}`);
+            message.error(resJson.error);
+            setError(resJson.error)
+        } else if ('token' in resJson) {
+            // console.log('Login success! Token get!');
+            message.success('Login success!');
+            setToken(resJson.token);
+        }
     };
 
     const handleUsername = e => {
@@ -48,9 +62,18 @@ export default function Login(props) {
 
     return (
         <div className='login-form-container'>
-            <form onSubmit={handleSubmit}>
-                <div className='login-form-item'>
-                    <label htmlFor="username">Username</label>
+            <Form onSubmit={handleSubmit}>
+                <Form.Item 
+                    className='login-form-item'
+                    // label="Username"
+                    name="username"
+                    rules={[{
+                        required: true,
+                        message: 'Username (6-12)'
+                    }]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} type='text' placeholder="Username"/>
+                    {/* <label htmlFor="username">Username</label>
                     <input 
                         size='12' 
                         type="text" 
@@ -61,10 +84,19 @@ export default function Login(props) {
                         placeholder={'Username (6-12)'} 
                         pattern={USERNAME_REGEX} 
                         onChange={handleUsername} 
-                        required/>
-                </div>
-                <div className='login-form-item'>
-                    <label htmlFor="password">Password</label>
+                        required/> */}
+                </Form.Item>
+                <Form.Item 
+                    className='login-form-item'
+                    // label='Password'
+                    name='password'
+                    rules={[{
+                        required: true,
+                        message: 'Password (8-16)'
+                    }]}
+                >
+                    <Input prefix={<LockOutlined className="site-form-item-icon" />} type='password' placeholder="Password"/>
+                    {/* <label htmlFor="password">Password</label>
                     <input 
                         size='12' 
                         type={pwVisible ? "text" : "password"} 
@@ -77,13 +109,17 @@ export default function Login(props) {
                         onChange={handlePassword} 
                         onMouseOver={() => setPwVisible(true)} 
                         onMouseOut={() => setPwVisible(false)} 
-                        required/>
-                </div>
-                <div className='login-form-submit'>
-                    <button name='login'>Login</button>
-                    <button name='register'>Register</button>
-                </div>
-            </form>
+                        required/> */}
+                </Form.Item>
+                <Form.Item 
+                    className='login-form-submit'
+                >
+                    <Button className='login-form-button' name='login' onClick={e => handleSubmit(e, 'login')}>Login</Button>
+                    <Button className='login-form-button' name='register' onClick={e => handleSubmit(e, 'register')}>Register</Button>
+                    {/* <button name='login'>Login</button>
+                    <button name='register'>Register</button> */}
+                </Form.Item>
+            </Form>
         </div>
     )
 }

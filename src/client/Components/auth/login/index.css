@@ -1,35 +1,30 @@
 .login-form-container > form{
     margin: 1rem auto;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     width: 14rem;
     border: 1px solid #CCC;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
 }
 
-.login-form-item, .login-form-submit {
+/* .login-form-item, .login-form-submit {
     display: flex;
     flex-direction: column;
     margin: 0.8rem auto
-}
+} */
 
 
-.login-form-item input{
+/* .login-form-item input{
     border-radius: 0.5rem;
     margin-top: 0.5rem;
     padding: 0.2rem;
+} */
+
+.login-form-button {
+    width: 100%;
+    margin: 0.2rem auto;
 }
 
-.login-form-submit button {
-    border: 1px solid #CCC;
-    border-radius: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    margin: 0.2rem 0;
-    width: 100px;
-    align-self: center;
-    transition: all 0.2s ease-in;
-}
-
-.login-form-submit button:hover {
+/* .login-form-submit button:hover {
     background-color: cyan;
     border: 1px solid cyan;
-}
+} */

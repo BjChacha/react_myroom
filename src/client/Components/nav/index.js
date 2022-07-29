@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Link, useOutletContext } from "react-router-dom";
+import {message} from 'antd';
 
 import "./index.css";
 
@@ -9,7 +10,8 @@ export default function MyNav(props) {
     const {refresh, setRefresh} = useState(0)
 
     const logout = () => {
-        console.log('Logout!');
+        // console.log('Logout!');
+        message.success('Logout success!');
         setToken(null);
     }
 
