@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Proptypes from 'prop-types';
 import {message} from 'antd';
 import {Form, Input, Button} from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 import './index.css';
 
@@ -30,7 +30,6 @@ export default function Login(props) {
 
     const handleSubmit = async (e, type) => {
         e.preventDefault();
-        // const type = e.nativeEvent.submitter.name;
 
         console.log('submit: ',username, password);
         const resJson = await submitUser({
@@ -40,23 +39,19 @@ export default function Login(props) {
         });
 
         if ('error' in resJson) {
-            // console.log(`${type} failed: ${resJson.error}`);
             message.error(resJson.error);
             setError(resJson.error)
         } else if ('token' in resJson) {
-            // console.log('Login success! Token get!');
             message.success('Login success!');
             setToken(resJson.token);
         }
     };
 
     const handleUsername = e => {
-        e.target.value = e.target.value.replace(/\W/g, '');
         setUsername(e.target.value);
     };
     
     const handlePassword = e => {
-        e.target.value = e.target.value.replace(/[^ a-zA-Z0-9!@#\$%\^&\*]/g, '');
         setPassword(e.target.value);
     };
 
@@ -67,57 +62,61 @@ export default function Login(props) {
                     className='login-form-item'
                     // label="Username"
                     name="username"
-                    rules={[{
-                        required: true,
-                        message: 'Username (6-12)'
-                    }]}
-                >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} type='text' placeholder="Username"/>
-                    {/* <label htmlFor="username">Username</label>
-                    <input 
-                        size='12' 
-                        type="text" 
-                        id='username' 
-                        value={username}
-                        minLength={6} 
-                        maxLength={12} 
-                        placeholder={'Username (6-12)'} 
-                        pattern={USERNAME_REGEX} 
+                    getValueFromEvent = {e => e.target.value.replace(/\W/g, '')}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Username is required'
+                        },
+                        {
+                            min: 6,
+                            max: 12,
+                            message: 'Length must be in \[6, 12\]'
+                        },
+                        {
+                            pattern: USERNAME_REGEX,
+                            message: 'Only consist of alpha and digit'
+                        },
+                    ]}>
+                    <Input 
+                        prefix={<UserOutlined className="site-form-item-icon" />} 
+                        placeholder="Username"
                         onChange={handleUsername} 
-                        required/> */}
+                        allowClear
+                    />
                 </Form.Item>
                 <Form.Item 
                     className='login-form-item'
                     // label='Password'
                     name='password'
-                    rules={[{
-                        required: true,
-                        message: 'Password (8-16)'
-                    }]}
-                >
-                    <Input prefix={<LockOutlined className="site-form-item-icon" />} type='password' placeholder="Password"/>
-                    {/* <label htmlFor="password">Password</label>
-                    <input 
-                        size='12' 
-                        type={pwVisible ? "text" : "password"} 
-                        id='password' 
-                        value={password}
-                        minLength={8} 
-                        maxLength={16} 
-                        placeholder={'Password (8-16)'} 
-                        pattern={PASSWORD_REGEX} 
+                    getValueFromEvent = {e => e.target.value.replace(/[^ a-zA-Z0-9!@#\$%\^&\*]/g, '')}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Password is required'
+                        },
+                        {
+                            min: 8,
+                            max: 16,
+                            message: 'Length must be in \[8, 16\]'
+                        },
+                        {
+                            pattern: PASSWORD_REGEX,
+                            message: 'Illegal character is not allowed'
+                        },
+                    ]}>
+                    <Input.Password 
+                        prefix={<LockOutlined className="site-form-item-icon" />} 
+                        placeholder="Password"
+                        iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                         onChange={handlePassword} 
-                        onMouseOver={() => setPwVisible(true)} 
-                        onMouseOut={() => setPwVisible(false)} 
-                        required/> */}
+                    />
                 </Form.Item>
                 <Form.Item 
                     className='login-form-submit'
                 >
                     <Button className='login-form-button' name='login' onClick={e => handleSubmit(e, 'login')}>Login</Button>
                     <Button className='login-form-button' name='register' onClick={e => handleSubmit(e, 'register')}>Register</Button>
-                    {/* <button name='login'>Login</button>
-                    <button name='register'>Register</button> */}
                 </Form.Item>
             </Form>
         </div>
