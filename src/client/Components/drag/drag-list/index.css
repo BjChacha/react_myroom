@@ -1,0 +1,15 @@
+.drag-list {
+    width: 280px;
+}
+
+.drag-list-title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.drag-list-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10%;
+}

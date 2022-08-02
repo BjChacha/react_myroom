@@ -1,15 +1,17 @@
 import React from 'react'
 import DragTextComponent from '../dragable/DragTextComponent'
 import { Typography } from 'antd';
+import './index.css'
+
 const { Title } = Typography;
 
 export default function DragList() {
     return (
-        <div className='drag-list h-screen w-96 bg-red-500'> 
-            <div className='drag-list-title text-center h-8 bg-slate-300 leading-8 text-lg'>
+        <div className='drag-list'> 
+            <div className='drag-list-title'>
                 Drag List
             </div>
-            <div className='drag-list-area flex flex-col items-center p-6'>
+            <div className='drag-list-area'>
                 <DragTextComponent></DragTextComponent>
             </div>
         </div>

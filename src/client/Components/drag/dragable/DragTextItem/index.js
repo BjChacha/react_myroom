@@ -4,7 +4,7 @@ import { DRAG_ITEM_TYPE } from '../../const'
 
 export default function DragTextItem(props) {
 
-    const {attributes, onclickCallback} = props;
+    const {attributes, onClickCallback} = props;
 
     const [collected, drag, dragPreview] = useDrag(() => ({
         type: DRAG_ITEM_TYPE.TEXT,
@@ -24,25 +24,26 @@ export default function DragTextItem(props) {
     return (
         <div
             key={attributes.id}
-            onClick={()=>{
-                onclickCallback(attributes.id)
+            onClick={(e)=>{
+                onClickCallback(attributes.id)
+                e.stopPropagation();
             }}
             style={{
-                color: attributes.color,
-                fontSize: `${attributes.size}px`,
-                width: `${attributes.width}px`,
-                height: `${attributes.height}px`,
-                left: `${attributes.left}px`,
-                top: `${attributes.top}px`,
-                lineHeight: `${attributes.height}px`,
+                color: attributes.color??'#000000',
+                fontSize: `${attributes.size??12}px`,
+                width: `${attributes.width??100}px`,
+                height: `${attributes.height??20}px`,
+                left: `${attributes.left??0}px`,
+                top: `${attributes.top??0}px`,
+                lineHeight: `${attributes.height??20}px`,
                 position: 'absolute',
-                backgroundColor: attributes.backgroundColor,
-                textAlign: attributes.align,
+                backgroundColor: attributes.backgroundColor??'#ffffff',
+                textAlign: attributes.align??'left',
                 // TODO: 0 when dragging
                 opacity: collected.isDragging ? 0 : 1,
             }}
             ref={drag}>
-            {attributes.value}
+            {attributes.value??''}
         </div>
         );
 }

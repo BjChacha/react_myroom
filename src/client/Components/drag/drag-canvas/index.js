@@ -2,57 +2,28 @@ import React from 'react';
 import { DRAG_COMPONENT_TYPE as DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from '../const';
 import { useDrop, useDrag } from 'react-dnd'
 import DragTextItem from '../dragable/DragTextItem'
+import DragBlankItem from '../dragable/DragBlankItem'
+import './index.css'
 
 export default function DragCanvas(props) {
 
-    const {dragItems, setDragItems, setAttributeId} = props;
+    const {dragMain, setDragMain, setAttributeId} = props;
 
-    const moveItem = (id, dx, dy) => {
-        for (let item of dragItems) {
-            if (item.id === id) {
-                item.left += dx;
-                item.top += dy;
-            }
-        }
-        setDragItems([...dragItems]);
+    const moveItem = (dx, dy) => {
+        dragMain.left += dx;
+        dragMain.top += dy;
+        setDragMain(dragMain);
     };
 
     const [, drop] = useDrop(() => ({
-        accept: [DRAG_COMPONENT_TYPE.TEXT, DRAG_ITEM_TYPE.TEXT],
+        accept: [DRAG_ITEM_TYPE.BLANK],
         drop: (item, monitor) => {
             const t = monitor.getItemType();
-            let itemId = null;
-            if (t === DRAG_COMPONENT_TYPE.TEXT) {
-                itemId = `${dragItems.length + 1}`;
-
-                const { x, y } = monitor.getClientOffset();
-                const currentX = x - 313;
-                const currentY = y - 123;
-
-                setDragItems([
-                  ...dragItems,
-                  {
-                    id: itemId,
-                    type: DRAG_COMPONENT_TYPE.TEXT,
-                    value: "This is a text",
-                    color: '#000000',
-                    backgroundColor: '#ffffff',
-                    size: 12,
-                    width: 100,
-                    height: 20,
-                    left: currentX,
-                    top: currentY,
-                    align: 'center',
-                  }
-                ])
-            } else if (t === DRAG_ITEM_TYPE.TEXT) {
-                itemId = item.id;
-
+            if (t === DRAG_ITEM_TYPE.BLANK) {
                 const {x, y} = monitor.getDifferenceFromInitialOffset();
-                // console.log(x, y);
-                moveItem(itemId, x, y);
+                moveItem(x, y);
             }
-            setAttributeId(itemId);
+            setAttributeId(item.id);
         }
     }));
 
@@ -83,11 +54,12 @@ export default function DragCanvas(props) {
     }
 
     return (
-        <div className='drag-canvas h-screen w-full bg-sky-400'> 
-            <div className='drag-canvas-title text-center h-8 bg-slate-400 leading-8 text-lg'>
+        <div className='drag-canvas-app'> 
+            <div className='drag-canvas-title'>
                 Drag Canvas
             </div>
-            <div className='drag-canvas-area relative h-full w-full' ref={drop}>{generateContent()}
+            <div className='drag-canvas-area' ref={drop}>
+               <DragBlankItem attributes={dragMain} setAttributes={setDragMain} onClickCallback={setAttributeId}/>
             </div>
         </div>
     )

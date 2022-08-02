@@ -1,0 +1,27 @@
+.drag-attribute {
+    flex: 240px 1 0;
+}
+
+.drag-attribute-title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.drag-attributes {
+    display: flex;
+    flex-direction: column;
+}
+
+.drag-attribute-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 0.5em;
+}
+
+.drag-attribute-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5em;
+}
