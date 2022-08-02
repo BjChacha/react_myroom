@@ -1,5 +1,9 @@
 import React from 'react'
-import DragTextComponent from '../dragable/DragTextComponent'
+import DragTextComponent from '../dragable/components/DragTextComponent'
+import DragImageComponent from '../dragable/components/DragImageComponent'
+import DragVideoComponent from '../dragable/components/DragVideoComponent'
+import DragAudioComponent from '../dragable/components/DragAudioComponent'
+import DragCardComponent from '../dragable/components/DragCardComponent'
 import { Typography } from 'antd';
 import './index.css'
 
@@ -13,6 +17,10 @@ export default function DragList() {
             </div>
             <div className='drag-list-area'>
                 <DragTextComponent></DragTextComponent>
+                <DragImageComponent></DragImageComponent>
+                <DragVideoComponent></DragVideoComponent>
+                <DragAudioComponent></DragAudioComponent>
+                <DragCardComponent></DragCardComponent>
             </div>
         </div>
     )
