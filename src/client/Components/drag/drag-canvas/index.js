@@ -1,8 +1,8 @@
 import React from 'react';
-import { DRAG_COMPONENT_TYPE as DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from '../const';
+import { DRAG_COMPONENT_TYPE as DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from 'const';
 import { useDrop, useDrag } from 'react-dnd'
-import DragTextItem from '../dragable/DragTextItem'
-import DragBlankItem from '../dragable/DragBlankItem'
+import DragTextItem from '../dragable/items/DragTextItem'
+import DragBlankItem from '../dragable/items/DragBlankItem'
 import './index.css'
 
 export default function DragCanvas(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { DRAG_COMPONENT_TYPE } from '../../../const'
+import { DRAG_COMPONENT_TYPE } from 'const'
 
 export default function DragCardComponent() {
 
@@ -12,7 +12,7 @@ export default function DragCardComponent() {
     }));
 
     return (
-        <div className='drag-component drag-text-component' ref={drag}>
+        <div className='drag-component drag-component-card' ref={drag}>
             Card 
         </div>);
 }

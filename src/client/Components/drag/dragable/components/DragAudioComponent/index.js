@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { DRAG_COMPONENT_TYPE } from '../../../const'
+import { DRAG_COMPONENT_TYPE } from 'const'
 
 export default function DragAudioComponent() {
 
@@ -12,7 +12,7 @@ export default function DragAudioComponent() {
     }));
 
     return (
-        <div className='drag-component drag-text-component' ref={drag}>
+        <div className='drag-component drag-component-audio' ref={drag}>
             Audio
         </div>);
 }

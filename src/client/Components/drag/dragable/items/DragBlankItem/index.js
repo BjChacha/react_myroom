@@ -1,14 +1,22 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd'
-import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE, COMPONENT2ITEM } from '../../const'
+import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE, COMPONENT2ITEM } from 'const'
 import DragTextItem from '../DragTextItem'
+import DragImageItem from '../DragImageItem'
+import DragVideoItem from '../DragVideoItem'
 
 export default function DragBlankItem(props) {
 
     function displayChildren() {
-        const res = attributes.children.map((item) => 
-            <DragTextItem key={item.id} attributes={item} onClickCallback={onClickCallback}/>
-        );
+        const res = attributes.children.map((item) => {
+            if (item.type === DRAG_ITEM_TYPE.TEXT) {
+                return <DragTextItem key={item.id} attributes={item} onClickCallback={onClickCallback}/>
+            } else if (item.type === DRAG_ITEM_TYPE.IMAGE) {
+                return <DragImageItem key={item.id} attributes={item} onClickCallback={onClickCallback}/>
+            } else if (item.type === DRAG_ITEM_TYPE.VIDEO) {
+                return <DragVideoItem key={item.id} attributes={item} onClickCallback={onClickCallback}/>
+            }
+        });
         return res;
     }
 
@@ -64,8 +72,8 @@ export default function DragBlankItem(props) {
                     color: '#000000',
                     backgroundColor: '#e5e5e5',
                     size: 16,
-                    width: 100,
-                    height: 20,
+                    width: 120,
+                    height: 80,
                     left: curX,
                     top: curY,
                     align: 'center',

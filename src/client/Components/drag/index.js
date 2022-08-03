@@ -4,7 +4,7 @@ import DragCanvas from './drag-canvas'
 import DragAttribute from './drag-attribute'
 import { DndProvider } from "react-dnd/dist/core";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from './const'
+import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE } from 'const'
 import { MOCK_ITEMS } from '../../Mocks/data'
 import './index.css'
 

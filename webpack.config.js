@@ -18,10 +18,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader", "postcss-loader"] 
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        type: "asset/resource",
       }
     ]
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
+  resolve: {
+      alias: {
+        'const': path.resolve(__dirname, 'src/client/const'),
+        'assets': path.resolve(__dirname, 'assets'),
+      },
+      extensions: ["*", ".js", ".jsx"] 
+  },
   output: {
     path: path.resolve(__dirname, "./dist"),
     publicPath: "/dist/",

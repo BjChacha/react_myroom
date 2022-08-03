@@ -19,8 +19,10 @@ export default function DragList() {
                 <DragTextComponent></DragTextComponent>
                 <DragImageComponent></DragImageComponent>
                 <DragVideoComponent></DragVideoComponent>
+                {/*
                 <DragAudioComponent></DragAudioComponent>
                 <DragCardComponent></DragCardComponent>
+                */}
             </div>
         </div>
     )

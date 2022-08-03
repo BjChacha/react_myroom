@@ -1,4 +1,4 @@
-import { DRAG_ITEM_TYPE } from '../Components/drag/const';
+import { DRAG_ITEM_TYPE } from 'const';
 
 export const MOCK_ITEMS = [
     {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { DRAG_ITEM_TYPE } from '../const'
+import { DRAG_ITEM_TYPE } from 'const'
 import { Radio } from 'antd'
 import './index.css'
 

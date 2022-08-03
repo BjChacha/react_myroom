@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd'
-import { DRAG_ITEM_TYPE } from '../../const'
+import { DRAG_ITEM_TYPE } from 'const'
 
 export default function DragTextItem(props) {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { DRAG_COMPONENT_TYPE } from '../../../const'
+import { DRAG_COMPONENT_TYPE } from 'const'
 
 export default function DragTextComponent() {
 
@@ -12,7 +12,7 @@ export default function DragTextComponent() {
     }));
 
     return (
-        <div className='drag-text-component border-solid border-2 border-black rounded-md h-12 w-20 font-sans text-center text-xl leading-11 cursor-grab' ref={drag}>
+        <div className='drag-component drag-component-text' ref={drag}>
             Text
         </div>);
 }
