@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { DRAG_ITEM_TYPE } from 'const'
-import { Radio } from 'antd'
+import { Radio, Input, TextArea, InputNumber, Slide } from 'antd'
 import './index.css'
 
 export default function DragAttribute(props) {
@@ -106,8 +106,7 @@ export default function DragAttribute(props) {
                     name='attribute-width'
                     type='number'
                     value={value}
-                    min={1}
-                    max={1200}
+                    min={0}
                     onChange={(e) => setItemAttribute(id, 'width', +e.target.value)}
                 ></input>
             </div>
@@ -122,9 +121,9 @@ export default function DragAttribute(props) {
                     id='attribute-height'
                     name='attribute-height'
                     type='number'
+                    
                     value={value}
-                    min={1}
-                    max={1200}
+                    min={0}
                     onChange={(e) => setItemAttribute(id, 'height', +e.target.value)}
                 ></input>
             </div>
@@ -140,8 +139,6 @@ export default function DragAttribute(props) {
                     name='attribute-left'
                     type='number'
                     value={value}
-                    min={-400}
-                    max={400}
                     onChange={(e) => setItemAttribute(id, 'left', +e.target.value)}
                 ></input>
             </div>
@@ -157,8 +154,6 @@ export default function DragAttribute(props) {
                     name='attribute-top'
                     type='number'
                     value={value}
-                    min={-400}
-                    max={400}
                     onChange={(e) => setItemAttribute(id, 'top', +e.target.value)}
                 ></input>
             </div>
@@ -247,6 +242,30 @@ export default function DragAttribute(props) {
         );
     }
 
+    const getImageAttributes = (attributes) => {
+        
+        let {id, type, value, width, height, left, top} = attributes;
+
+        return (
+            <div key={id} className="drag-attributes">
+                <div className='drag-attribute-name'>
+                    Image Component
+                </div>
+                <div className='drag-attribute-area'>
+                    <div className='drag-attribute-item drag-attribute-id'>
+                        <div>Id</div>
+                        <div>{dragItemId}</div>
+                    </div>
+                    {getValueComponent(id, value)}
+                    {getWidthComponent(id, width)}
+                    {getHeightComponent(id, height)}
+                    {getLeftComponent(id, left)}
+                    {getTopComponent(id, top)}
+                </div>
+            </div>
+        );
+    }
+
     const getBlankAttributes = (attributes) => {
         let {id, width, height} = attributes;
         
@@ -280,6 +299,8 @@ export default function DragAttribute(props) {
                 return getTextAttributes(dragItem);
             } else if (type == DRAG_ITEM_TYPE.VIDEO) {
                 return getVideoAttributes(dragItem);
+            } else if (type == DRAG_ITEM_TYPE.IMAGE) {
+                return getImageAttributes(dragItem);
             } else {
                 return <div>
                     Unsupported item

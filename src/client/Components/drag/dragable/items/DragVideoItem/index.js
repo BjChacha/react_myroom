@@ -22,7 +22,9 @@ export default function DragVideoItem(props) {
     }));
 
     const handlePlay = () => {
-        videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause();
+        if (videoRef.current.readyState > 0) {
+            videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause();
+        }
     }
     
     const defaultUrl = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm";
