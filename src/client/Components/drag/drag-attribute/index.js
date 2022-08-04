@@ -200,7 +200,7 @@ export default function DragAttribute(props) {
         let {id, type, value, color, backgroundColor, size, width, height, left, top, align} = attributes;
         
         return (
-            <div key={dragItemId} className="drag-attributes">
+            <div key={id} className="drag-attributes">
                 <div className='drag-attribute-name'>
                     Text Component
                 </div>
@@ -218,6 +218,30 @@ export default function DragAttribute(props) {
                     {getLeftComponent(id, left)}
                     {getTopComponent(id, top)}
                     {getTextAlignComponent(id, align)}
+                </div>
+            </div>
+        );
+    }
+
+    const getVideoAttributes = (attributes) => {
+        
+        let {id, type, value, width, height, left, top} = attributes;
+
+        return (
+            <div key={id} className="drag-attributes">
+                <div className='drag-attribute-name'>
+                    Video Component
+                </div>
+                <div className='drag-attribute-area'>
+                    <div className='drag-attribute-item drag-attribute-id'>
+                        <div>Id</div>
+                        <div>{dragItemId}</div>
+                    </div>
+                    {getValueComponent(id, value)}
+                    {getWidthComponent(id, width)}
+                    {getHeightComponent(id, height)}
+                    {getLeftComponent(id, left)}
+                    {getTopComponent(id, top)}
                 </div>
             </div>
         );
@@ -252,9 +276,10 @@ export default function DragAttribute(props) {
             const type = dragItem.type;
             if (type === DRAG_ITEM_TYPE.BLANK) {
                 return getBlankAttributes(dragItem)
-            } 
-            else if (type === DRAG_ITEM_TYPE.TEXT) {
+            } else if (type === DRAG_ITEM_TYPE.TEXT) {
                 return getTextAttributes(dragItem);
+            } else if (type == DRAG_ITEM_TYPE.VIDEO) {
+                return getVideoAttributes(dragItem);
             } else {
                 return <div>
                     Unsupported item
