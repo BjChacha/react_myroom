@@ -30,6 +30,7 @@ export default function DragImageItem(props) {
                 e.stopPropagation();
             }}
             style={{
+                type: DRAG_ITEM_TYPE.IMAGE,
                 color: attributes.color??'#000000',
                 fontSize: `${attributes.size??12}px`,
                 width: `${attributes.width??100}px`,

@@ -62,7 +62,6 @@ export default function DragBlankItem(props) {
             } else if (Object.values(DRAG_COMPONENT_TYPE).includes(t)) {
                 const id = `${attributes.children.length + 1}`;
                 const {x, y} = monitor.getClientOffset();
-                console.log(x - +attributes.left, y - +attributes.top);
                 const curX = x - +attributes.left - 243;
                 const curY = y - +attributes.top - 113;
                 attributes.children.push({
@@ -96,6 +95,8 @@ export default function DragBlankItem(props) {
                onClickCallback(attributes.id)
             }}
             style={{
+                id: `${attributes.id ?? '0'}`,
+                type: `${attributes.type ?? DRAG_ITEM_TYPE.BLANK}`,
                 width: `${attributes.width}px`,
                 height: `${attributes.height}px`,
                 left: `${attributes.left}px`,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Proptypes from 'prop-types';
-import {message, notification} from 'antd';
+import {notification} from 'antd';
 import {Form, Input, Button} from 'antd';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 

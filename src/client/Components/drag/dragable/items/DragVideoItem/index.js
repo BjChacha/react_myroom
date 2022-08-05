@@ -37,6 +37,7 @@ export default function DragVideoItem(props) {
                 e.stopPropagation();
             }}
             style={{
+                type: DRAG_ITEM_TYPE.VIDEO,
                 color: attributes.color??'#000000',
                 fontSize: `${attributes.size??12}px`,
                 width: `${attributes.width??100}px`,

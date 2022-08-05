@@ -29,6 +29,7 @@ export default function DragTextItem(props) {
                 e.stopPropagation();
             }}
             style={{
+                type: DRAG_ITEM_TYPE.TEXT,
                 color: attributes.color??'#000000',
                 fontSize: `${attributes.size??12}px`,
                 width: `${attributes.width??100}px`,

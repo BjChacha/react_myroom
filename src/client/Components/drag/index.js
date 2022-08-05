@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, createRef} from "react";
 import DragList from './drag-list'
 import DragCanvas from './drag-canvas'
 import DragAttribute from './drag-attribute'
@@ -17,30 +17,38 @@ function hashCode(str) {
     return hash;
 }
 
-export default function DragApp() {
-    const drag_items = [...MOCK_ITEMS];
-    
-    // TODO: adaptively position
-    const [dragMain, setDragMain] = useState({
+const dragItems = [...MOCK_ITEMS];
+
+const defaultCanvas = {
         id: '0',
         type: DRAG_ITEM_TYPE.BLANK,
         height: 600,
         width: 360,
         left: 520,
         top: 40,
-        children: [...drag_items],
-    }); 
+        children: [...dragItems],
+}
 
-    const [dragItem, setDragItem] = useState(null);
-    const [dragItems, setDragItems] = useState([...drag_items]);
+const initialCanvas = localStorage.getItem('saved-canvas') ? JSON.parse(localStorage.getItem('saved-canvas')) : defaultCanvas;
+
+export default function DragApp() {
+    
+    const [dragMain, setDragMain] = useState(initialCanvas);
+
     const [attributeId, setAttributeId] = useState(null);
-  
+    const [hashKey, setHashKey] = useState(hashCode(JSON.stringify(dragMain.id)));
+
+    const setDragMainWithKey = (obj) => {
+        setDragMain(obj);
+        setHashKey(hashCode(JSON.stringify(obj)));
+    }
+
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="drag-app">
                 <DragList/>
-                <DragCanvas key={hashCode(JSON.stringify(dragMain))} dragMain={dragMain} setDragMain={setDragMain} setAttributeId={setAttributeId}/>
-                <DragAttribute dragMain={dragMain} dragItemId={attributeId} setDragMain={setDragMain}/>
+                <DragCanvas key={hashKey} dragMain={dragMain} setDragMain={setDragMainWithKey} setAttributeId={setAttributeId}/>
+                <DragAttribute dragMain={dragMain} dragItemId={attributeId} setDragMain={setDragMainWithKey}/>
             </div>
         </DndProvider>
     );
