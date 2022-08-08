@@ -10,14 +10,10 @@ const {Header, Footer, Content} = Layout;
 
 export default function App(props) {
 
-    const [token, setToken] = useToken(localStorage);
-
-    console.log(token);
-
     return (
         <Layout>
-            <Header><MyNav token={token} setToken={setToken}/></Header>
-            <Content><Outlet context={[token, setToken]} /></Content>
+            <Header><MyNav /></Header>
+            <Content><Outlet /></Content>
             <Footer><MyFooter /></Footer>
         </Layout>
     )

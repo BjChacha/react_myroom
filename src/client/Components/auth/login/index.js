@@ -1,27 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Proptypes from 'prop-types';
-import {notification} from 'antd';
-import {Form, Input, Button} from 'antd';
+import { notification } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-
+import { submitUserRequest } from '../utils';
 import './index.css';
 
 const USERNAME_REGEX = '^[a-zA-Z0-9\-]+$';
 const PASSWORD_REGEX = '^[a-zA-Z0-9!@#\$%\^&\*]{8,16}$';
 
-async function submitUser(credentials) {
-    return fetch('http://localhost:8080/auth', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-    }).then(data => data.json());
-}
-
 export default function Login(props) {
 
-    const {error, setError, setToken} = props;
+    const {setToken, setLocalUsername, setLocalEmail} = props;
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -31,25 +21,22 @@ export default function Login(props) {
     const handleSubmit = async (e, type) => {
         e.preventDefault();
 
-        console.log('submit: ',username, password);
-        const resJson = await submitUser({
-            username,
-            password,
-            type,
-        });
+        const resJson = await submitUserRequest(username, password, type);
 
-        if ('error' in resJson) {
+        if (resJson.error) {
             notification.error({
                 message: `Operation ${type} error!`,
                 description: resJson.error,
             },);
-            setError(resJson.error);
         } else if ('token' in resJson) {
             notification.success({
                 message: `Operation ${type} success!`,
                 description: 'Login success!',
             },);
+            console.log('login: ', resJson.email)
             setToken(resJson.token);
+            setLocalUsername(username);
+            setLocalEmail(resJson.email);
         }
     };
 
@@ -92,6 +79,7 @@ export default function Login(props) {
             password.length <= 16 &&
             passwordRegex.test(password));
     }
+
     return (
         <div className='login-form-container'>
             <Form onSubmit={e => handleSubmit(e, 'login')}>
@@ -161,7 +149,3 @@ export default function Login(props) {
         </div>
     )
 }
-
-Login.propTypes = {
-    setToken: Proptypes.func.isRequired,
-};

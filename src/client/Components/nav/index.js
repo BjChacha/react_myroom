@@ -4,7 +4,7 @@ import {message, Menu} from 'antd';
 
 import "./index.css";
 
-export default function MyNav(props) {
+export default function MyNav() {
 
     const navigate = useNavigate();
 
@@ -21,7 +21,6 @@ export default function MyNav(props) {
     };
 
     const handleNavigation = (item) => {
-        //console.log({item, key, keyPath, e});
         navigate(toLink[item.key]);
     };
 

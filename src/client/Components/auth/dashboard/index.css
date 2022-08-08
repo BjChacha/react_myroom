@@ -1,0 +1,16 @@
+.dashboard {
+    width: 35vw;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
+.dashboard-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.dashboard-row {
+    margin: 1rem 0;
+}
