@@ -33,7 +33,6 @@ export default function Login(props) {
                 message: `Operation ${type} success!`,
                 description: 'Login success!',
             },);
-            console.log('login: ', resJson.email)
             setToken(resJson.token);
             setLocalUsername(username);
             setLocalEmail(resJson.email);
@@ -125,10 +124,6 @@ export default function Login(props) {
                             min: 8,
                             max: 16,
                             message: 'Length must be in \[8, 16\]'
-                        },
-                        {
-                            pattern: PASSWORD_REGEX,
-                            message: 'Illegal character is not allowed'
                         },
                     ]}>
                     <Input.Password 

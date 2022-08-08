@@ -104,7 +104,6 @@ export default function DragAttribute(props) {
                             id='attribute-value'
                             name='attribute-value'
                             value={value}
-                            autoSize={{ minRows: 1, maxRows: 2 }}
                             onChange={(e) => setItemAttribute(id, 'value', e.target.value)}
                         />
                     </Col>

@@ -60,12 +60,17 @@ export default function DragBlankItem(props) {
                 moveChildren(item.id, x, y);
                 onClickCallback(item.id);
             } else if (Object.values(DRAG_COMPONENT_TYPE).includes(t)) {
-                const id = `${attributes.children.length + 1}`;
+                let id = 1;
+                for (let item of attributes.children) {
+                    if (item.id == id) {
+                        id ++;
+                    } else if (item.id > id) break;
+                }
                 const {x, y} = monitor.getClientOffset();
                 const curX = x - +attributes.left - 243;
                 const curY = y - +attributes.top - 113;
-                attributes.children.push({
-                    id,
+                attributes.children.splice(id - 1, 0, {
+                    id: `${id}`,
                     type: COMPONENT2ITEM[t],
                     value: 'item',
                     color: '#000000',

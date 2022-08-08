@@ -6,25 +6,8 @@
     border-radius: 0.5rem;
 }
 
-/* .login-form-item, .login-form-submit {
-    display: flex;
-    flex-direction: column;
-    margin: 0.8rem auto
-} */
-
-
-/* .login-form-item input{
-    border-radius: 0.5rem;
-    margin-top: 0.5rem;
-    padding: 0.2rem;
-} */
-
 .login-form-button {
     width: 100%;
     margin: 0.2rem auto;
 }
 
-/* .login-form-submit button:hover {
-    background-color: cyan;
-    border: 1px solid cyan;
-} */
