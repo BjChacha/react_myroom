@@ -1,9 +1,7 @@
 const e = require('express');
-const {removeUser, addUser, getUser} = require('./db');
-const {hashSync, signToken, getSaltSync} = require('./jwt')
-
+const {removeUser, addUser, getUser, updateUser} = require('./db');
+const {hashSync, signToken, verifyToken, getSaltSync} = require('./jwt')
 const sqlite3 = require('sqlite3').verbose();
-// const {getSaltSync, hashSync} = require('./jwt');
 
 const AUTH_TABLE_NAME = 'accounts'
 
@@ -58,7 +56,7 @@ const loginFn = async (req, res) => {
                             user_id: row.Id,
                             username: row.Username,
                         }, '1h');
-                    return res.send({token});
+                    return res.send({token, 'username': row.Username, 'email': row.Email});
                 } else {
                     console.log(`User ${username} login failed: Incorrect password!`);
                     return res.send({'error': 'Incorrect password'});
@@ -120,9 +118,69 @@ const registerFn = (req, res) => {
     }
 }
 
-const processAuthRequest = {
-    'login': loginFn,
-    'register': registerFn,
+const getEmailFn = (req, res) => {
+    const info = req.body;
+    if (!verifyToken(info.token)) return new Promise((resolve, reject) => resolve(res.send({'error': 'Invalid token'})));
+    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
+        if (err) {
+            return res.send({'error': err.message});
+        } else {
+            console.log(row);
+            return res.send({'email': row.Email});
+        }
+    });
+}
+
+const updateEmailFn = (req, res) => {
+    const info = req.body;
+    if (!verifyToken(info.token)) return new Promise((resolve, reject) => {res.send({'error': 'Invalid token'})});
+    updateUser(AUTH_TABLE_NAME, info.username, 'Email', info.email, (err, row) => {
+        if (err) {
+            return res.send({'error': err.message});
+        } else {
+            getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
+                if (err) {
+                    return res.send({'error': err.message});
+                } else {
+                    return res.send({'email': row.Email});
+                }
+            });
+        }
+    });
 };
 
-module.exports = processAuthRequest;
+const updatePasswordFn = (req, res) => {
+    const info = req.body;
+    if (!verifyToken(info.token)) return new Promise((resolve, reject) => {res.send({'error': 'Invalid token'})});
+
+    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
+        if (err) {
+            return res.send({'error': err.message});
+        } else {
+            const PHash = hashSync(info.password, row.Salt);
+            updateUser(AUTH_TABLE_NAME, info.username, 'Password', PHash, (err, row) => {
+                if (err) {
+                    return res.send({'error': err.message});
+                } else {
+                    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
+                        if (err) {
+                            return res.send({'error': err.message});
+                        } else {
+                            return res.send({});
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
+const processRequest = {
+    'login': loginFn,
+    'register': registerFn,
+    'updatePassword': updatePasswordFn,
+    'updateEmail': updateEmailFn,
+    'getEmail': getEmailFn,
+};
+
+module.exports = processRequest;

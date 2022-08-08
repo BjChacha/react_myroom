@@ -23,4 +23,5 @@ module.exports = {
     getSaltSync,
     hashSync,
     signToken,
+    verifyToken,
 }

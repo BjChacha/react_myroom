@@ -27,7 +27,7 @@ function initTable(tableName) {
 
 function getUser(tableName, username, callback) {
     const db = new sqlite3.Database(AUTH_DB_PATH);
-    db.get(`SELECT * FROM ${tableName} WHERE username=?`, username, callback);
+    db.get(`SELECT * FROM ${tableName} WHERE Username=?`, username, callback);
     db.close();
 }
 
@@ -40,7 +40,9 @@ function addUser(tableName, info, callback) {
 
 // TODO: update last login, mainly
 function updateUser(tableName, username, updateCol, updateRow, callback) {
-
+    const db = new sqlite3.Database(AUTH_DB_PATH);
+    db.run(`UPDATE ${tableName} SET ${updateCol}=? WHERE Username=?`, updateRow, username, callback);
+    db.close();
 }
 
 function removeUser(tableName, username, callback) {
@@ -54,4 +56,5 @@ module.exports = {
     getUser,
     addUser,
     removeUser,
+    updateUser,
 };
