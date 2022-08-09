@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Popconfirm, message, Input, Tooltip, Divider} from 'antd';
 import { EditOutlined, CheckOutlined } from '@ant-design/icons';
-import { updatePasswordRequest, updateEmailRequest, getEmailRequest } from '../utils'
+import { updateUserRequest } from 'client/api/utils'
 import './index.css';
 
 export default function Dashboard(props) {
 
-    const { token, localUsername, localEmail, setToken, setLocalUsername, setLocalEmail } = props;
+    const { token, localUsername, localEmail, setToken, setLocalUsername, setLocalEmail, setLocalCanvas } = props;
 
     const passwordPlaceholder = '********';
 
@@ -31,10 +31,15 @@ export default function Dashboard(props) {
             message.error('Password is invalid!');
             setPassword(null);
         } else {
-            updatePasswordRequest(localUsername, token, password).then(res => {
+            updateUserRequest(localUsername, token, 'password', password).then(res => {
                 if (res.error) {
-                    message.error(`Password changed failed: ${res.error}`);
-                    setPassword(null);
+                    if (res.required && res.required === 'logout') {
+                        message.error('Token expired, please login again!');
+                        logout();
+                    } else {
+                        message.error(`Password changed failed: ${res.error}`);
+                        setPassword(null);
+                    }
                 } else {
                     message.success('Password changed successfully!');
                 }
@@ -47,10 +52,15 @@ export default function Dashboard(props) {
             message.error('Invalid email address!');
             setEmail(localEmail);
         } else {
-            updateEmailRequest(localUsername, token, email).then(res => {
+            updateUserRequest(localUsername, token, 'email', email).then(res => {
                 if (res.error) {
-                    message.error(`Email changed failed: ${res.error}`);
-                    setEmail(localEmail);
+                    if (res.required && res.required === 'logout') {
+                        message.error('Token expired, please login again!');
+                        logout();
+                    } else {
+                        message.error(`Email changed failed: ${res.error}`);
+                        setEmail(localEmail);
+                    }
                 } else {
                     message.success('Email changed successfully!');
                     setLocalEmail(email);
@@ -59,6 +69,13 @@ export default function Dashboard(props) {
         }
     }
     
+    const logout = () => {
+        setToken(null);
+        setLocalUsername(null);
+        setLocalEmail(null);
+        setLocalCanvas(null);
+    }
+
     const handlePasswordButton = (e) => {
         if (passwordEditable) {
             if (!password) setPassword();
@@ -84,7 +101,7 @@ export default function Dashboard(props) {
     }
 
     const handleLogoutConfirm = (e) => {
-        setToken(null);
+        logout();
         console.log('logout...');
     }
 
@@ -94,20 +111,20 @@ export default function Dashboard(props) {
 
     return (
         <div className="dashboard">
-            <Row className='dashboard-title' justify='center'>Dashboard</Row>
+            <Row className='dashboard-title' align='middle' justify='center'>Dashboard</Row>
             <Divider />
             <Row justify='space-between'>
                 <Col span={8}>Username</Col>
-                <Col span={14}>
+                <Col span={12}>
                     <Input
                         value={localUsername}
                         bordered={false}
                     />
                 </Col>
             </Row>
-            <Row className='dashboard-row' justify='space-between'>
+            <Row className='dashboard-row' align='middle' justify='space-between'>
                 <Col span={8}>Password</Col>
-                <Col span={14}>
+                <Col span={12}>
                     <Input.Group compact>
                         <Input.Password
                             style={{width: 'calc(100% - 40px)'}}
@@ -121,9 +138,9 @@ export default function Dashboard(props) {
                     </Input.Group>
                 </Col>
             </Row> 
-            <Row className='dashboard-row' justify='space-between'>
+            <Row className='dashboard-row' align='middle' justify='space-between'>
                 <Col span={8}>Email</Col>
-                <Col span={14}>
+                <Col span={12}>
                     <Input.Group compact>
                         <Input
                             type='email'

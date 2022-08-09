@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import { notification } from 'antd';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, UserOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { submitUserRequest } from '../utils';
+import { submitUserRequest } from 'client/api/utils';
 import './index.css';
 
 const USERNAME_REGEX = '^[a-zA-Z0-9\-]+$';
@@ -11,7 +11,7 @@ const PASSWORD_REGEX = '^[a-zA-Z0-9!@#\$%\^&\*]{8,16}$';
 
 export default function Login(props) {
 
-    const {setToken, setLocalUsername, setLocalEmail} = props;
+    const {setToken, setLocalUsername, setLocalEmail, setLocalCanvas} = props;
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -36,6 +36,8 @@ export default function Login(props) {
             setToken(resJson.token);
             setLocalUsername(username);
             setLocalEmail(resJson.email);
+            if (resJson.savedCanvas) 
+                setLocalCanvas(JSON.parse(resJson.savedCanvas));
         }
     };
 

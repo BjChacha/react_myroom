@@ -31,6 +31,12 @@ function getUser(tableName, username, callback) {
     db.close();
 }
 
+function getUserInfo(tableName, username, key, callback) {
+    const db = new sqlite3.Database(AUTH_DB_PATH);
+    db.get(`SELECT ${key} FROM ${tableName} WHERE Username=?`, username, callback);
+    db.close();
+}
+
 function addUser(tableName, info, callback) {
     const db = new sqlite3.Database(AUTH_DB_PATH);
     const salt = getSaltSync(10);
@@ -38,7 +44,6 @@ function addUser(tableName, info, callback) {
     db.close();
 }
 
-// TODO: update last login, mainly
 function updateUser(tableName, username, updateCol, updateRow, callback) {
     const db = new sqlite3.Database(AUTH_DB_PATH);
     db.run(`UPDATE ${tableName} SET ${updateCol}=? WHERE Username=?`, updateRow, username, callback);
@@ -54,6 +59,7 @@ function removeUser(tableName, username, callback) {
 module.exports = {
     initTable,
     getUser,
+    getUserInfo,
     addUser,
     removeUser,
     updateUser,

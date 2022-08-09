@@ -4,16 +4,18 @@ import MyNav from './Components/nav';
 import { Outlet } from "react-router-dom";
 import {Layout} from 'antd';
 import useToken from './Hooks/useToken'
+import useLocalCanvas from './Hooks/useLocalCanvas'
 
 const {Header, Footer, Content} = Layout;
 
+export default function App() {
 
-export default function App(props) {
+    const [localCanvas, setLocalCanvas] = useLocalCanvas();
 
     return (
         <Layout>
             <Header><MyNav /></Header>
-            <Content><Outlet /></Content>
+            <Content><Outlet context={[localCanvas, setLocalCanvas]}/></Content>
             <Footer><MyFooter /></Footer>
         </Layout>
     )

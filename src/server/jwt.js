@@ -16,7 +16,12 @@ const signToken = (content, expiresIn) => {
 }
 
 const verifyToken = (token) => {
-    return jwt.verify(token, process.env.TOKEN_KEY);
+    try {
+        jwt.verify(token, process.env.TOKEN_KEY);
+        return true;
+    } catch (err) {
+        return false;
+    }
 }
 
 module.exports = {

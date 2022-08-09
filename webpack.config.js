@@ -27,7 +27,8 @@ module.exports = {
   },
   resolve: {
       alias: {
-        'const': path.resolve(__dirname, 'src/client/const'),
+        'client': path.resolve(__dirname, 'src/client'),
+        'server': path.resolve(__dirname, 'src/server'),
         'assets': path.resolve(__dirname, 'assets'),
       },
       extensions: ["*", ".js", ".jsx"] 

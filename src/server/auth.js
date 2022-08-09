@@ -1,9 +1,10 @@
 const e = require('express');
-const {removeUser, addUser, getUser, updateUser} = require('./db');
+const {removeUser, addUser, getUser, getUserInfo, updateUser} = require('./db');
 const {hashSync, signToken, verifyToken, getSaltSync} = require('./jwt')
 const sqlite3 = require('sqlite3').verbose();
 
 const AUTH_TABLE_NAME = 'accounts'
+const TOKEN_EXPIRATION = '1h';
 
 const checkUsername = (username) => {
     // only consist of alphabet and -
@@ -51,12 +52,13 @@ const loginFn = async (req, res) => {
 
                 if (PHash === row.Password) {
                     console.log(`User ${username} login success!`);
+                    console.log(row)
                     // gen token
                     const token = signToken({
                             user_id: row.Id,
                             username: row.Username,
-                        }, '1h');
-                    return res.send({token, 'username': row.Username, 'email': row.Email});
+                        }, TOKEN_EXPIRATION);
+                    return res.send({token, 'username': row.Username, 'email': row.Email, 'savedCanvas': row.SavedCanvas});
                 } else {
                     console.log(`User ${username} login failed: Incorrect password!`);
                     return res.send({'error': 'Incorrect password'});
@@ -104,7 +106,7 @@ const registerFn = (req, res) => {
                                 const token = signToken({
                                         user_id: row.Id,
                                         username: row.Username,
-                                    }, '1h');
+                                    }, TOKEN_EXPIRATION);
                                 return res.send({token});
                             } else {
                                 console.log(`User ${username} login failed: Incorrect password!`);
@@ -118,69 +120,61 @@ const registerFn = (req, res) => {
     }
 }
 
-const getEmailFn = (req, res) => {
-    const info = req.body;
-    if (!verifyToken(info.token)) return new Promise((resolve, reject) => resolve(res.send({'error': 'Invalid token'})));
-    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
+const getFn = (req, res) => {
+    const {username, token, key }= req.body;
+    if (!verifyToken(token)) return new Promise((resolve, reject) => resolve(res.send({'error': 'Invalid token', 'required': 'logout'})));
+    getUserInfo(AUTH_TABLE_NAME, username, key[0].toUpperCase() + key.slice(1), (err, row) => {
         if (err) {
             return res.send({'error': err.message});
         } else {
             console.log(row);
-            return res.send({'email': row.Email});
+            return res.send({key: row[key[0].toUpperCase() + key.slice(1)]});
         }
     });
 }
 
-const updateEmailFn = (req, res) => {
-    const info = req.body;
-    if (!verifyToken(info.token)) return new Promise((resolve, reject) => {res.send({'error': 'Invalid token'})});
-    updateUser(AUTH_TABLE_NAME, info.username, 'Email', info.email, (err, row) => {
-        if (err) {
-            return res.send({'error': err.message});
-        } else {
-            getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
-                if (err) {
-                    return res.send({'error': err.message});
-                } else {
-                    return res.send({'email': row.Email});
-                }
-            });
-        }
-    });
-};
+const updateFn = (req, res) => {
+    const {username, token, key, value} = req.body;
+    if (!verifyToken(token)) return new Promise((resolve, reject) => {resolve(res.send({'error': 'Invalid token', 'required': 'logout'}))});
 
-const updatePasswordFn = (req, res) => {
-    const info = req.body;
-    if (!verifyToken(info.token)) return new Promise((resolve, reject) => {res.send({'error': 'Invalid token'})});
-
-    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
-        if (err) {
-            return res.send({'error': err.message});
-        } else {
-            const PHash = hashSync(info.password, row.Salt);
-            updateUser(AUTH_TABLE_NAME, info.username, 'Password', PHash, (err, row) => {
-                if (err) {
-                    return res.send({'error': err.message});
-                } else {
-                    getUser(AUTH_TABLE_NAME, info.username, (err, row) => {
-                        if (err) {
-                            return res.send({'error': err.message});
-                        } else {
-                            return res.send({});
-                        }
-                    });
-                }
-            });
-        }
-    });
+    if (key === 'password') {
+        const PHash = hashSync(password, row.Salt);
+        updateUser(AUTH_TABLE_NAME, username, 'Password', PHash, (err, row) => {
+            if (err) {
+                return res.send({'error': err.message});
+            } else {
+                getUser(AUTH_TABLE_NAME, username, (err, row) => {
+                    if (err) {
+                        return res.send({'error': err.message});
+                    } else {
+                        return res.send({});
+                    }
+                });
+            }
+        });
+    } else {
+        console.log('update: ', {key, value, username});
+        updateUser(AUTH_TABLE_NAME, username, key[0].toUpperCase() + key.slice(1), value, (err, row) => {
+            if (err) {
+                return res.send({'error': err.message});
+            } else {
+                getUser(AUTH_TABLE_NAME, username, (err, row) => {
+                    if (err) {
+                        return res.send({'error': err.message});
+                    } else {
+                        return res.send({key: row[key[0].toUpperCase() + key.slice(1)]});
+                    }
+                });
+            }
+        });
+    }
 };
 
 const processRequest = {
     'login': loginFn,
     'register': registerFn,
-    'updatePassword': updatePasswordFn,
-    'updateEmail': updateEmailFn,
-    'getEmail': getEmailFn,
+    'update': updateFn,
+    'get': getFn,
 };
 
 module.exports = processRequest;

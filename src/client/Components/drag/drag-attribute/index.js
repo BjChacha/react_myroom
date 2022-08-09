@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { DRAG_ITEM_TYPE } from 'const'
 import { Radio, Input, InputNumber, Slider, Col, Row, ConfigProvider, Button, Popconfirm, notification, Divider } from 'antd'
+import { updateUserRequest } from 'client/api/utils'
 import html2canvas from 'html2canvas'
+import { DRAG_ITEM_TYPE } from 'client/const'
 import './index.css'
 
 export default function DragAttribute(props) {
 
-    const {dragMain, dragItemId, setDragMain} = props;
+    const {dragMain, dragItemId, localCanvas, setDragMain, setLocalCanvas} = props;
     
     const getDragItem = (id) => {
         if (id === '0') return dragMain; 
@@ -21,24 +22,35 @@ export default function DragAttribute(props) {
         setDragMain(dragMain);
     }
 
-    const saveCanvas = (showConfirm) => {
-        if (localStorage.getItem('saved-canvas') === null || showConfirm == null) {
-            localStorage.setItem('saved-canvas', JSON.stringify(dragMain));
+    const saveCanvas = () => {
+        if (!sessionStorage.getItem('token')) {
+            notification.error({
+                message: 'Need login',
+                description: 'Please login first',
+            });
+        } else {
+            updateUserRequest(
+                sessionStorage.getItem('localUsername'),
+                sessionStorage.getItem('token'),
+                'savedCanvas',
+                JSON.stringify(dragMain)
+            );
+            setLocalCanvas(dragMain);
             notification.success({
                 message: 'Saved',
                 description: 'Saved canvas successfully',
             });
-        } else {
-            showConfirm();
         }
     }
 
     const loadCanvas = () => {
-        const savedCanvas = localStorage.getItem('saved-canvas');
-        console.log(savedCanvas);
-        console.log(JSON.parse(savedCanvas));
-        if (savedCanvas) {
-            setDragMain(JSON.parse(savedCanvas));
+        if (!sessionStorage.getItem('token')) {
+            notification.error({
+                message: 'Need login',
+                description: 'Please login first',
+            });
+        } else if (sessionStorage.getItem('savedCanvas')) {
+            setDragMain(JSON.parse(sessionStorage.getItem('savedCanvas')));
         } else {
             notification.error({
                 message: 'Load failed',
@@ -376,16 +388,8 @@ export default function DragAttribute(props) {
 
         return (
             <Row justify='space-around'>
-                <Popconfirm
-                    title='Saved canvas detected. Are you sure to save?'
-                    okText='Yes'
-                    cancelText='No'
-                    okType='danger'
-                    onConfirm={handleConfirm}
-                >
-                    <Button size='small'>Save</Button>
-                </Popconfirm>
-                <Button size='small' onClick={() => loadCanvas()}>Load</Button>
+                <Button size='small' onClick={handleConfirm}>Save</Button>
+                <Button size='small' onClick={loadCanvas}>Load</Button>
                 <Popconfirm
                     title='Are you sure to clear canvas?'
                     okText='Yes'

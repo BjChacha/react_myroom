@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd'
-import { DRAG_ITEM_TYPE } from 'const'
+import { DRAG_ITEM_TYPE } from 'client/const'
 import pic from 'assets/images/pic.jpg'
 
 export default function DragImageItem(props) {

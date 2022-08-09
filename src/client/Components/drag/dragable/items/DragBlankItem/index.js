@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd'
-import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE, COMPONENT2ITEM } from 'const'
+import { DRAG_COMPONENT_TYPE, DRAG_ITEM_TYPE, COMPONENT2ITEM } from 'client/const'
 import DragTextItem from '../DragTextItem'
 import DragImageItem from '../DragImageItem'
 import DragVideoItem from '../DragVideoItem'
@@ -32,7 +32,7 @@ export default function DragBlankItem(props) {
 
     const ref = React.useRef(null);
     const {attributes, setAttributes, onClickCallback} = props;
-
+    
     const [collected, drag, dragPreview] = useDrag(() => ({
         type: DRAG_ITEM_TYPE.BLANK,
         item: {
@@ -102,10 +102,10 @@ export default function DragBlankItem(props) {
             style={{
                 id: `${attributes.id ?? '0'}`,
                 type: `${attributes.type ?? DRAG_ITEM_TYPE.BLANK}`,
-                width: `${attributes.width}px`,
-                height: `${attributes.height}px`,
-                left: `${attributes.left}px`,
-                top: `${attributes.top}px`,
+                width: `${attributes.width ?? 360}px`,
+                height: `${attributes.height ?? 600}px`,
+                left: `${attributes.left ?? 520}px`,
+                top: `${attributes.top ?? 40}px`,
                 position: 'absolute',
                 border: '1px solid #ccc',
                 backgroundColor: '#fff',

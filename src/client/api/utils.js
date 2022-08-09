@@ -13,17 +13,13 @@ export async function submitUserRequest(username, password, type) {
     return sendRequest(credentials);
 }
 
-export async function updatePasswordRequest(username, token, password) {
-    const credentials = {username, token, password, type:'updatePassword'};
+export async function updateUserRequest(username, token, key, value) {
+    const credentials = {username, token, key, value, type:'update'};
     return sendRequest(credentials);
 }
 
-export async function updateEmailRequest(username, token, email) {
-    const credentials = {username, token, email, type:'updateEmail'};
+export async function getUserRequest(username, token, key) {
+    const credentials = {username, token, key, type:'get'};
     return sendRequest(credentials);
 }
 
-export async function getEmailRequest(username, token) {
-    const credentials = {username, token, type:'getEmail'};
-    return sendRequest(credentials);
-}

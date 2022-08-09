@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd'
-import { DRAG_ITEM_TYPE } from 'const'
+import { DRAG_ITEM_TYPE } from 'client/const'
 
 export default function DragVideoItem(props) {
 

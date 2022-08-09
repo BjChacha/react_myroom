@@ -3,7 +3,7 @@ import { useState } from "react";
 const STORAGE_TYPE = "session";
 const STORAGE_KEY = "localEmail";
 
-export default function useEmail() {
+export default function useLocalEmail() {
     const storage = STORAGE_TYPE === 'session' ? sessionStorage : localStorage;
     const getLocalEmail= () => {
         return storage.getItem(STORAGE_KEY);

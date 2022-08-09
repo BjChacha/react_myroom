@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { DRAG_COMPONENT_TYPE } from 'const'
+import { DRAG_COMPONENT_TYPE } from 'client/const'
 
 export default function DragVideoComponent() {
 
