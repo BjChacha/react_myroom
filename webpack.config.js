@@ -2,18 +2,29 @@ const path = require("path");
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 
-module.exports = {
+module.exports = smp.wrap({
   entry: "./src/client/index.js",
   mode: "development",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: { presets: ["@babel/env"] }
+        include: path.resolve(__dirname, "src"),
+        use: [
+          {        
+            loader: "babel-loader?cacheDirectory",
+            options: { 
+              presets: ["@babel/env"], 
+            }
+          },
+          {
+            loader: "thread-loader",
+          }
+        ],
       },
       {
         test: /\.css$/,
@@ -22,7 +33,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif)$/,
         type: "asset/resource",
-      }
+      },
     ]
   },
   resolve: {
@@ -58,4 +69,4 @@ module.exports = {
       extractComments: false,
     })],
   },
-};
+});
