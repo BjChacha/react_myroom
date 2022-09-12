@@ -1,5 +1,6 @@
 .drag-list {
-    width: 280px;
+    width: 20%;
+    min-width: 200px;
 }
 
 .drag-list-title {

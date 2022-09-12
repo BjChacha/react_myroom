@@ -3,7 +3,6 @@ import MyFooter from './Components/footer';
 import MyNav from './Components/nav';
 import { Outlet } from "react-router-dom";
 import {Layout} from 'antd';
-import useToken from './Hooks/useToken'
 import useLocalCanvas from './Hooks/useLocalCanvas'
 
 const {Header, Footer, Content} = Layout;

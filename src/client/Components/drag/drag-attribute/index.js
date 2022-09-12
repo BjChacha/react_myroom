@@ -477,7 +477,7 @@ export default function DragAttribute(props) {
         let {id, width, height, left, top} = attributes;
         
         return (
-            <div key={dragItemId} className="drag-attributes">
+            <div key={dragItemId} className="drag-attribute-content">
                 <div className='drag-attribute-name'>
                     Canvas Component
                 </div>

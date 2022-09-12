@@ -1,5 +1,5 @@
-.drag-attribute {
-    flex: 240px 1 0;
+.drag-attribute-content {
+    flex: 1 0 240px;
 }
 
 .drag-attribute-title {
@@ -8,7 +8,9 @@
     margin-bottom: 0.5em;
 }
 
-.drag-attributes {
+.drag-attribute {
+    width: 20%;
+    min-width: 240px;
     display: flex;
     flex-direction: column;
 }
